@@ -1,1 +1,28 @@
 @import './reset.css';
+
+:root {
+  --bg-color: #F6F6F7;
+  --bg-sidebar: #FFFFFF;
+  --text-sidebar: #161616;
+  --text-color: #161616;
+  --text-secondary: rgba(22, 22, 22, 0.7);
+  --card-bg-accent: #BEDBB0;
+}
+
+[data-theme='dark'] {
+  --bg-sidebar: #121212;
+  --bg-color: #1F1F1F;
+  --text-sidebar: #FFFFFF;
+  --text-color: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --card-bg-accent: #BEDBB0;
+}
+
+[data-theme='violet'] {
+  --bg-sidebar: #5255BC;
+  --text-sidebar: #FFFFFF;
+  --bg-color: #B8BCFD;
+  --text-color: #161616;
+  --text-secondary: #161616B2;
+  --card-bg-accent: #5255BC;
+}
