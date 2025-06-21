@@ -7,6 +7,7 @@
   --text-color: #161616;
   --text-secondary: rgba(22, 22, 22, 0.7);
   --card-bg-accent: #BEDBB0;
+  --logo-fill: #ffffff;
 }
 
 [data-theme='dark'] {
@@ -16,6 +17,7 @@
   --text-color: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.5);
   --card-bg-accent: #BEDBB0;
+  --logo-fill: #ffffff;
 }
 
 [data-theme='violet'] {
@@ -25,4 +27,5 @@
   --text-color: #161616;
   --text-secondary: #161616B2;
   --card-bg-accent: #5255BC;
+  --logo-fill: #5255BC;
 }

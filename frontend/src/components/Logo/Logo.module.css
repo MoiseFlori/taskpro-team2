@@ -1,0 +1,17 @@
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  fill: var(--logo-fill); /* Controlled by theme */
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-sidebar); /* Optional for theme sync */
+}

@@ -1,0 +1,101 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  height: 100vh;
+  background-color: var(--bg-sidebar);
+  width: 100%; 
+}
+
+/* Tablet and up: fixed sidebar */
+@media screen and (min-width: 768px) {
+  .sidebar {
+    width: 240px; 
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+
+.sectionTitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 16px 0 8px;
+}
+
+.createBoardWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px; 
+}
+
+.createBoardText {
+  font-size: 14px;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.plusButton {
+  background-color: var(--card-bg-accent);
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plusIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-color); 
+}
+
+.helpCard {
+  background: rgba(0, 0, 0, 0.03); /* or themed */
+  border-radius: 8px;
+  padding: 16px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.helpCard img {
+  width: 40px;
+  margin-bottom: 12px;
+}
+
+.helpCard p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.helpBtn {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.logoutIcon {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-sidebar); 
+}
