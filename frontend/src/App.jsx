@@ -1,15 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Sidebar from "./components/sidebar/Sidebar";
-import NewBoardModal from "./Components/Modals/NewBoardModal";
-import EditBoardModal from "./Components/Modals/EditBoardModal";
-import NeedHelpModal from "./Components/Modals/NeedHelpModal";
+import NewBoardModal from "./components/modals/NewBoardModal";
+import EditBoardModal from "./components/modals/EditBoardModal";
+import NeedHelpModal from "./components/modals/NeedHelpModal";
 import WelcomePage from "./pages/WelcomePage";
+import CardDashboard from "./components/dashboard/cards/CardDashboard";
+import AddCardModal from "./components/modals/cards/AddCardModal";
+
 import { useState } from "react";
 
 function App() {
   const [isLoggedIn] = useState(true); // sau false pentru test
   const [activeModal, setActiveModal] = useState(null);
-
+  const [modalOpen, setModalOpen] = useState(false);
   const openModal = (type) => setActiveModal(type);
   const closeModal = () => setActiveModal(null);
 
@@ -30,10 +35,23 @@ function App() {
               {activeModal === "editBoard" && (
                 <EditBoardModal onClose={closeModal} />
               )}
-              {activeModal === "help" && (
-                <NeedHelpModal onClose={closeModal} />
-              )}
+              {activeModal === "help" && <NeedHelpModal onClose={closeModal} />}
             </>
+          }
+        />
+
+        <Route
+          path="/sidebar-test/cards"
+          element={
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <>
+                <CardDashboard />
+                <AddCardModal
+                  open={modalOpen}
+                  onClose={() => setModalOpen(true)}
+                />
+              </>
+            </LocalizationProvider>
           }
         />
 

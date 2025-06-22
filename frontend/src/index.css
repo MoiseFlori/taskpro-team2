@@ -4,6 +4,7 @@
 :root {
   --bg-color: #F6F6F7;
   --bg-sidebar: #FFFFFF;
+  --bg-modal-color: #FCFCFC;
   --text-sidebar: #161616;
   --text-color: #161616;
   --text-secondary: rgba(22, 22, 22, 0.7);
