@@ -10,6 +10,9 @@ import CardDashboard from "./components/dashboard/cards/CardDashboard";
 import AddCardModal from "./components/modals/cards/AddCardModal";
 
 import { useState } from "react";
+import AuthPage from "./pages/AuthPage";
+import VerifySuccess from "./pages/VerifySuccess";
+import VerifyFail from "./pages/VerifyFail";
 
 function App() {
   const [isLoggedIn] = useState(true); // sau false pentru test
@@ -22,6 +25,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<WelcomePage />} />
+        <Route path="/auth/:id" element={<AuthPage />} />
+        <Route path="/verify-success" element={<VerifySuccess />} />
+        <Route path="/verify-fail" element={<VerifyFail />} />
 
         {/* >>> DEV ONLY: Sidebar test route (no login needed) <<< */}
         <Route
