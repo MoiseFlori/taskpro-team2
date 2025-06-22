@@ -37,11 +37,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
 
-// mongoose
-//   .connect(process.env.MONGODB_URI)
-//   .then(() => console.log("✅ Connected to:", mongoose.connection.name))
-//   .catch((err) => console.error("❌ Connection error:", err));
-
-// app.listen(PORT, () => console.log(`🚀 Server is running on port ${PORT}`));
-
 module.exports = app;

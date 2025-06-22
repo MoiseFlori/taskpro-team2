@@ -1,5 +1,5 @@
 const Icon = ({
-    name,           // e.g., "star"
+    name,           
     width = 24,
     height = 24,
     fill = "currentColor",
