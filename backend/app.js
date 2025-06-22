@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 const userRouter = require("./routes/api/users");
+const cardRoutes = require("./routes/api/cards");
 
 app.use(logger(formatsLogger));
 const corsOptions = {
@@ -21,6 +22,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 app.use("/users", userRouter);
+app.use("/api/cards", cardRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
