@@ -1,0 +1,121 @@
+.welcomeBg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  background: var(--light-green-gradient);
+}
+
+.welcomeBg img {
+  margin-bottom: 14px;
+}
+
+.welcomeBg p {
+  margin-bottom: 48px;
+  text-align: center;
+  max-width: 280px;
+  font-size: 14px;
+}
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.logoTextWelcome {
+  font-size: 28px;
+  line-height: 100%;
+  letter-spacing: -4%;
+
+}
+
+.authNavWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.authRegisterLink {
+  font-weight: 500;
+  text-align: center;
+  min-width: 280px;
+  border-radius: 8px;
+  padding: 14px 0;
+  color: var(--white-color);
+  background-color: var(--black-color);
+  transition: color var(--easedTransition),
+    background-color var(--easedTransition);
+  text-decoration: none;
+}
+
+.authLoginLink {
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--easedTransition);
+}
+
+
+@media screen and (min-width: 375px) {
+  .welcomeBg p {
+    max-width: 335px;
+  }
+
+  .authRegisterLink {
+    min-width: 335px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .welcomeBg img {
+    margin-bottom: 24px;
+  }
+
+  .welcomeBg p {
+    max-width: 470px;
+    font-size: 14px;
+    line-height: 1.29;
+  }
+
+  .logoWrap {
+    margin-bottom: 30px;
+  }
+
+  .logo {
+    font-size: 40px;
+  }
+
+  .logo span {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo span svg {
+    width: 18px;
+    height: 24px;
+  }
+
+  .authRegisterLink {
+    max-width: 340px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+
+  .authRegisterLink:hover,
+  .authRegisterLink:focus {
+    background-color: var(--white-color);
+    color: var(--black-color);
+  }
+
+  .authLoginLink:hover,
+  .authLoginLink:focus {
+    color: var(--white-color);
+  }
+}
