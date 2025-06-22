@@ -18,6 +18,27 @@ function App() {
       <Routes>
         <Route path="/" element={<WelcomePage />} />
 
+        {/* >>> DEV ONLY: Sidebar test route (no login needed) <<< */}
+        <Route
+          path="/sidebar-test"
+          element={
+            <>
+              <Sidebar onOpenModal={openModal} />
+              {activeModal === "newBoard" && (
+                <NewBoardModal onClose={closeModal} />
+              )}
+              {activeModal === "editBoard" && (
+                <EditBoardModal onClose={closeModal} />
+              )}
+              {activeModal === "help" && (
+                <NeedHelpModal onClose={closeModal} />
+              )}
+            </>
+          }
+        />
+
+        {/* Normal home route, protected by login */}
+
         {isLoggedIn && (
           <Route
             path="/home"

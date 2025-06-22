@@ -99,3 +99,24 @@
   height: 24px;
   fill: var(--text-sidebar); 
 }
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;          
+  margin-bottom: 32px; 
+}
+
+.logoIcon {
+  color: var(--logo-fill);
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-sidebar);
+  letter-spacing: -0.5px;
+  
+}
+
