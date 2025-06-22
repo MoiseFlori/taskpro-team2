@@ -1,24 +1,21 @@
-// index.js
 require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const morgan = require("morgan");
+console.log("📂 MONGODB_URI =", process.env.MONGODB_URI);
 
-const cardRoutes = require("./routes/api/cards");
-
-const app = express();
-
-app.use(cors());
-app.use(morgan("dev"));
-app.use(express.json());
-app.use("/api/cards", cardRoutes);
+const app = require("./app");
+const connectDB = require("./db");
 
 const PORT = process.env.PORT || 3000;
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ Connected to:", mongoose.connection.name))
-  .catch((err) => console.error("❌ Connection error:", err));
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server is running. Use our API on port: ${PORT}`);
+// });
 
-app.listen(PORT, () => console.log(`🚀 Server is running on port ${PORT}`));
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server pornit la http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("💥 Serverul nu a pornit din cauza MongoDB:", err.message);
+  });

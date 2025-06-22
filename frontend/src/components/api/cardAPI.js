@@ -1,5 +1,9 @@
 export const getCards = async () => {
   const res = await fetch("/api/cards");
+  // if (!res.ok) {
+  //   const message = await res.text(); // în loc de .json()
+  //   throw new Error(`Server error: ${res.status} – ${message}`);
+  // }
   return await res.json();
 };
 

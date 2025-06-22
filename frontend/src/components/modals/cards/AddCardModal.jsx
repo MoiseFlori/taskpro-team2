@@ -36,6 +36,18 @@ const AddCardModal = ({ open, onClose }) => {
       deadline: deadline.toISOString(),
     };
 
+    console.log("🚀 cardData trimis:", cardData);
+
+    if (!title.trim()) {
+      return alert("Titlul este obligatoriu");
+    }
+    console.log("🕒 deadline =", deadline, typeof deadline);
+
+    if (!deadline || !deadline.isValid()) {
+      return alert("Deadline invalid");
+    }
+    
+
     try {
       const response = await fetch("/api/cards", {
         method: "POST",
