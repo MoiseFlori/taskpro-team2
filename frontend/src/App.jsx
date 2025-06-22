@@ -1,27 +1,44 @@
-import './App.css';
-import Sidebar from './Components/Sidebar/Sidebar';
-import { useState } from 'react';
-import NewBoardModal from './Components/Modals/NewBoardModal';
-import EditBoardModal from './Components/Modals/EditBoardModal';
-import NeedHelpModal from './Components/Modals/NeedHelpModal';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/sidebar/Sidebar";
+import NewBoardModal from "./Components/Modals/NewBoardModal";
+import EditBoardModal from "./Components/Modals/EditBoardModal";
+import NeedHelpModal from "./Components/Modals/NeedHelpModal";
+import WelcomePage from "./pages/WelcomePage";
+import { useState } from "react";
 
 function App() {
-  const [isLoggedIn] = useState(true);
+  const [isLoggedIn] = useState(true); // sau false pentru test
   const [activeModal, setActiveModal] = useState(null);
 
   const openModal = (type) => setActiveModal(type);
   const closeModal = () => setActiveModal(null);
 
   return (
-    <>
-      {isLoggedIn && <Sidebar onOpenModal={openModal} />}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
 
-      {activeModal === 'newBoard' && <NewBoardModal onClose={closeModal} />}
-{activeModal === 'editBoard' && <EditBoardModal onClose={closeModal} />}
-{activeModal === 'help' && <NeedHelpModal onClose={closeModal} />}
-
-    </>
+        {isLoggedIn && (
+          <Route
+            path="/home"
+            element={
+              <>
+                <Sidebar onOpenModal={openModal} />
+                {activeModal === "newBoard" && (
+                  <NewBoardModal onClose={closeModal} />
+                )}
+                {activeModal === "editBoard" && (
+                  <EditBoardModal onClose={closeModal} />
+                )}
+                {activeModal === "help" && (
+                  <NeedHelpModal onClose={closeModal} />
+                )}
+              </>
+            }
+          />
+        )}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
