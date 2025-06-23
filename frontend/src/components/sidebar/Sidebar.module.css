@@ -120,3 +120,65 @@
   
 }
 
+.boardList {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;  /* more space above the list */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;            /* space between boards */
+  border-top: 1px solid var(--border-color, #ECECEC); /* subtle divider */
+}
+
+.boardItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--board-bg, #f8f8f8);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+}
+
+.boardItem:hover,
+.boardItem.active {
+  background: var(--card-bg-accent, #e2f4ea);
+  border-color: var(--primary, #609966);
+}
+
+.boardItem .iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boardItem .editBtn,
+.boardItem .deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 3px 6px;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  transition: background 0.2s, opacity 0.2s;
+}
+.boardItem .editBtn:hover,
+.boardItem .deleteBtn:hover {
+  background: rgba(96, 153, 102, 0.13);
+  opacity: 1;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
