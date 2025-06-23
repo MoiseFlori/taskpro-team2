@@ -1,0 +1,111 @@
+
+
+.background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--light-green-gradient);
+}
+
+.formWrap {
+  padding: 24px;
+  width: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  background-color: #151515;
+  border-radius: 8px;
+}
+
+.authList {
+  display: flex;
+  gap: 14px;
+}
+
+.authLink {
+  color: #ffffff30;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--easedTransition);
+}
+
+.authLink:hover,
+.authLink.active {
+  color: #ffffff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 18px;
+  background: transparent;
+  border: 1px solid #bedbb0;
+  border-radius: 8px;
+  color: #ffffff;
+  opacity: 0.5;
+  transition: opacity var(--easedTransition);
+}
+
+.input:focus,
+.input:hover {
+  opacity: 1;
+}
+
+.passInputWrap {
+  position: relative;
+}
+
+.hideBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, 50%);
+  opacity: 0.4;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.submitBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 0;
+  font-weight: 500;
+  background: #bedbb0;
+  border-radius: 8px;
+  color: #161616;
+  transition: background var(--easedTransition);
+  border: none;
+}
+
+.submitBtn:hover {
+  background: #9dc888;
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+
+@media screen and (min-width: 375px) {
+  .formWrap {
+    width: 335px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .formWrap {
+    width: 424px;
+  }
+}
