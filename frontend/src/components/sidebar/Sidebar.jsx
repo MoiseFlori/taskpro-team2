@@ -19,6 +19,7 @@ const Sidebar = ({ onOpenModal, boards = [] }) => {
     }
   };
 
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logoWrap}>
@@ -50,10 +51,10 @@ const Sidebar = ({ onOpenModal, boards = [] }) => {
       </div>
 
       <ul className={styles.boardList}>
-        {boards.map((board) => (
-          <BoardItem key={board.id} board={board} onOpenModal={onOpenModal} />
-        ))}
-      </ul>
+  {boards.map((board) => (
+    <BoardItem key={board._id} board={board} onOpenModal={onOpenModal} />
+  ))}
+</ul>
 
       <HelpCard onClick={() => onOpenModal("help")} />
 

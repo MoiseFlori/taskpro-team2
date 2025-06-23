@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { editBoardThunk } from '../../redux/boards/boardsSlice';
 import ModalWrapper from './ModalWrapper';
+import Icon from '../Icon';
 import styles from './Modal.module.css';
 
-import circles from '../../assets/boardOptions/icons/circles.svg';
-import star from '../../assets/boardOptions/icons/star.svg';
-import loading from '../../assets/boardOptions/icons/loading.svg';
-import puzzle from '../../assets/boardOptions/icons/puzzle.svg';
-import container from '../../assets/boardOptions/icons/container.svg';
-import lightning from '../../assets/boardOptions/icons/lightning.svg';
-import colors from '../../assets/boardOptions/icons/colors.svg';
-import hexagon from '../../assets/boardOptions/icons/hexagon.svg';
+
+const BOARD_ICONS = [
+  'circles', 'star', 'loading', 'puzzle', 'container', 
+  'lightning', 'colors', 'hexagon'
+];
+
 
 import bg1 from '../../assets/boardOptions/backgrounds/bg-1.jpg';
 import bg2 from '../../assets/boardOptions/backgrounds/bg-2.jpg';
@@ -27,28 +28,38 @@ import bg13 from '../../assets/boardOptions/backgrounds/bg-13.jpg';
 import bg14 from '../../assets/boardOptions/backgrounds/bg-14.jpg';
 import bg15 from '../../assets/boardOptions/backgrounds/bg-15.jpg';
 
+const backgrounds = [
+  bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8,
+  bg9, bg10, bg11, bg12, bg13, bg14, bg15
+];
 
-const icons = [circles, colors, container, hexagon, lightning, loading, puzzle, star];
-const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10, bg11, bg12, bg13, bg14, bg15];
+const EditBoardModal = ({ onClose, board }) => {
+  const dispatch = useDispatch(); // 1.
+  const [title, setTitle] = useState(board?.title || "");
+  const [selectedIcon, setSelectedIcon] = useState(board?.icon || null);
+  const [selectedBg, setSelectedBg] = useState(board?.background || null);
 
-const EditBoardModal = ({ onClose }) => {
-  const [title, setTitle] = useState('');
-  const [selectedIcon, setSelectedIcon] = useState(null);
-  const [selectedBg, setSelectedBg] = useState(null);
+  useEffect(() => {
+    setTitle(board?.title || "");
+    setSelectedIcon(board?.icon || null);
+    setSelectedBg(board?.background || null);
+  }, [board]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!board?._id) return; // safety
 
-    const newBoard = {
+    const updates = {
       title,
       icon: selectedIcon,
       background: selectedBg,
     };
 
-    console.log('Create new board:', newBoard);
-    // 🔁 Call onCreate handler later
-    onClose();
+    // 3. Dispatch the thunk
+    await dispatch(editBoardThunk({ id: board._id, data: updates })).unwrap();
+  onClose(); 
   };
+
 
   return (
     <ModalWrapper onClose={onClose}>
@@ -57,22 +68,25 @@ const EditBoardModal = ({ onClose }) => {
         <input
           className={styles.input}
           type="text"
-          defaultValue="Project office"
+          placeholder="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={e => setTitle(e.target.value)}
           required
         />
 
         <p className={styles.sectionLabel}>Icons</p>
         <div className={styles.iconList}>
-          {icons.map((icon, idx) => (
-            <img
-              key={idx}
-              src={icon}
-              alt={`icon-${idx}`}
-              onClick={() => setSelectedIcon(icon)}
-              className={`${styles.iconOption} ${selectedIcon === icon ? styles.selected : ''}`}
-            />
+          {BOARD_ICONS.map(iconName => (
+            <button
+              type="button"
+              key={iconName}
+              onClick={() => setSelectedIcon(iconName)}
+              className={`${styles.iconOption} ${selectedIcon === iconName ? styles.selected : ''}`}
+              aria-label={`Select ${iconName} icon`}
+              tabIndex={0}
+            >
+              <Icon name={iconName} width={24} height={24} />
+            </button>
           ))}
         </div>
 
@@ -85,6 +99,7 @@ const EditBoardModal = ({ onClose }) => {
               alt={`background-${idx}`}
               onClick={() => setSelectedBg(bg)}
               className={`${styles.bgOption} ${selectedBg === bg ? styles.selected : ''}`}
+              tabIndex={0}
             />
           ))}
         </div>

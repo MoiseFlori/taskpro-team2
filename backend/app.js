@@ -6,6 +6,8 @@ const cors = require("cors");
 
 const userRouter = require("./routes/api/users");
 const cardRoutes = require("./routes/api/cards");
+const boardRoutes = require('./routes/api/boards');
+const helpRoutes = require('./routes/api/help');
 
 const app = express();
 const connectDB = require("./db");
@@ -26,6 +28,8 @@ app.use(express.static("public"));
 
 app.use("/users", userRouter);
 app.use("/api/cards", cardRoutes);
+app.use('/api/boards', boardRoutes);
+app.use('/api/help', helpRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
