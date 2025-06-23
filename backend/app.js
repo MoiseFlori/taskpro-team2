@@ -1,16 +1,18 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
 const logger = require("morgan");
 const cors = require("cors");
 
-const app = express();
-const connectDB = require("./db");
-const cookieParser = require("cookie-parser");
-
-const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 const userRouter = require("./routes/api/users");
 const cardRoutes = require("./routes/api/cards");
 const boardRoutes = require('./routes/api/boards');
 const helpRoutes = require('./routes/api/help');
+
+const app = express();
+const connectDB = require("./db");
+
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 const corsOptions = {
@@ -18,10 +20,11 @@ const corsOptions = {
   credentials: true,
 };
 
+app.use(logger("dev"));
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static("public"));
 app.use(cookieParser());
+app.use(express.static("public"));
 
 app.use("/users", userRouter);
 app.use("/api/cards", cardRoutes);

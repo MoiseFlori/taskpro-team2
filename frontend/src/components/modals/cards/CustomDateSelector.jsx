@@ -9,7 +9,7 @@ const CustomDateSelector = ({ onChange }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Box>
+    <Box sx={{ marginBottom: "40px" }}>
       <DatePicker
         open={open}
         onClose={() => setOpen(false)}
