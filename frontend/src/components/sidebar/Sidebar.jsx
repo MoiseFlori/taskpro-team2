@@ -6,7 +6,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutThunk } from "../../redux/auth/authThunk";
 
-const Sidebar = ({ onOpenModal, boards = [] }) => {
+const Sidebar = ({
+  onOpenModal,
+  boards = [],
+  selectedBoardId,
+  onSelectBoard,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,7 +23,6 @@ const Sidebar = ({ onOpenModal, boards = [] }) => {
       console.error("Logout failed:", error);
     }
   };
-
 
   return (
     <aside className={styles.sidebar}>
@@ -51,10 +55,16 @@ const Sidebar = ({ onOpenModal, boards = [] }) => {
       </div>
 
       <ul className={styles.boardList}>
-  {boards.map((board) => (
-    <BoardItem key={board._id} board={board} onOpenModal={onOpenModal} />
-  ))}
-</ul>
+        {boards.map((board) => (
+          <BoardItem
+            key={board._id}
+            board={board}
+            onOpenModal={onOpenModal}
+            isActive={selectedBoardId === board._id}
+            onClick={() => onSelectBoard(board._id)}
+          />
+        ))}
+      </ul>
 
       <HelpCard onClick={() => onOpenModal("help")} />
 
