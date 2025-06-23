@@ -1,7 +1,13 @@
-.add-card-form {
-    margin: 6px 24px 24px 24px;
+.addCardForm{
+    /* margin: 6px 24px 24px 24px; */
 }
 
-.addCardTitle {
-    margin-bottom: 14px;
+.addCardSpan {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -2%;
+    color: var(--text-color);
+    margin-bottom: 24px;
 }
