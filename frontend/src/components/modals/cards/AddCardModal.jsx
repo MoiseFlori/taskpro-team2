@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import CustomDateSelector from "./CustomDateSelector";
 import styles from "./AddCardModal.module.css";
+import style from "../Modal.module.css";
 import "../../../index.css";
 
 
@@ -36,6 +37,18 @@ const AddCardModal = ({ open, onClose }) => {
       deadline: deadline.toISOString(),
     };
 
+    console.log("🚀 cardData trimis:", cardData);
+
+    if (!title.trim()) {
+      return alert("Titlul este obligatoriu");
+    }
+    console.log("🕒 deadline =", deadline, typeof deadline);
+
+    if (!deadline || !deadline.isValid()) {
+      return alert("Deadline invalid");
+    }
+    
+
     try {
       const response = await fetch("/api/cards", {
         method: "POST",
@@ -53,13 +66,13 @@ const AddCardModal = ({ open, onClose }) => {
  
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} className={style.backdrop}>
       <Box
+        className={styles.modal}
         sx={{
           background: "var(--bg-modal-color)",
           p: 4,
-          maxWidth: 400,
-          margin: "100px auto",
+          maxWidth: 350,
           borderRadius: 8,
           display: "flex",
           flexDirection: "column",
@@ -72,17 +85,16 @@ const AddCardModal = ({ open, onClose }) => {
         >
           <Icon name="x-close" size={18} />
         </Box>
-
-        Add card
-        
-        <form onSubmit={handleSubmit} className="add-card-form">
+        <span className={styles.addCardSpan}>Add card</span>
+        <form onSubmit={handleSubmit} className={styles.addCardForm}>
           <TextField
             label="Title"
             fullWidth
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className={styles.addCardTitle}
+            // className={styles.addCardTitle}
+            sx={{ marginBottom: "16px" }}
           />
           <TextField
             label="Description"
@@ -91,9 +103,11 @@ const AddCardModal = ({ open, onClose }) => {
             fullWidth
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            // className={styles.addCardDescription}
+            sx={{ marginBottom: "24px" }}
           />
-          <FormControl>
-            <FormLabel>Label color</FormLabel>
+          <FormControl sx={{ marginBottom: "14px" }}>
+            <FormLabel sx={{ marginBottom: "4px" }}>Label color</FormLabel>
             <RadioGroup
               row
               value={priority}
@@ -227,14 +241,17 @@ const AddCardModal = ({ open, onClose }) => {
             </Typography>
           </CustomDateSelector>
 
-          <Button
+          {/* <Button
             variant="contained"
             type="submit"
             sx={{ mt: 2 }}
             startIcon={<span style={{ fontWeight: "bold" }}>＋</span>}
           >
             Add
-          </Button>
+          </Button> */}
+          <button type="submit" className={style.submitBtn}>
+            <span className={style.plusBtn}>+</span> Add
+          </button>
         </form>
       </Box>
     </Modal>

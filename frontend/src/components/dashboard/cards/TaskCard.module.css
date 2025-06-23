@@ -1,46 +1,151 @@
-.task-card {
+.taskCard {
   display: flex;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  width: 334px;
+  min-height: 154px;
 }
 
-.priority-stripe {
-  width: 8px;
+.priorityStripe {
+  width: 4px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
-.priority-blue .priority-stripe {
-  background-color: #2196f3;
+.priority-blue .priorityStripe {
+  background-color: #8FA1D0;
 }
-.priority-pink .priority-stripe {
-  background-color: #e91e63;
+.priority-pink .priorityStripe {
+  background-color: #E09CB5;
 }
-.priority-green .priority-stripe {
-  background-color: #4caf50;
+.priority-green .priorityStripe {
+  background-color: #BEDBB0;
 }
-.priority-gray .priority-stripe {
-  background-color: #9e9e9e;
+.priority-gray .priorityStripe {
+  background-color: #1616164D;
 }
 
-.card-content {
-  padding: 12px 16px;
+.priority-blue .cardPriority {
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: #8FA1D0;
+} 
+
+.priority-pink .cardPriority {
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: #E09CB5;
+}
+
+.priority-green .cardPriority {
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: #BEDBB0;
+}
+
+.priority-gray .cardPriority {
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: #1616164D;
+}
+
+.priorityLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.gapColumn {
+  margin-right: 14px;
+}
+
+.rightMargin {
+  margin-right: 25px;
+}
+
+.priorityTitle {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 100%;
+  letter-spacing: -2%;
+  color: #16161680;
+}
+
+.priorityValue {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 100%;
+  letter-spacing: -2%;
+  color: #161616;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.metaInfo {
+  display: flex;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.cardContent {
+  padding: 14px 20px;
   flex: 1;
 }
 
-.card-title {
-  margin: 0 0 8px;
-  font-size: 18px;
-}
-
-.card-description {
-  margin: 0 0 12px;
+.cardTitle {
+  margin: 0 0 8px 0;
+  font-family: Poppins;
+  font-weight: 600;
   font-size: 14px;
-  color: #555;
+  line-height: 100%;
+  letter-spacing: -2%;
+  color: #161616;
 }
 
-.card-deadline {
+.cardDescription {
+  font-family: Poppins;
+  font-weight: 400;
   font-size: 12px;
-  color: #888;
+  line-height: 16px;
+  letter-spacing: -2%;
+  color: #161616B2;
+}
+
+.cardDeadline {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 100%;
+  letter-spacing: -2%;
+  color: #16161680;
+  padding-bottom: 15px;
+}
+
+.horizontalLine {
+  border-top: 1px solid #1616161A;
+  margin: 14px 0;
 }
