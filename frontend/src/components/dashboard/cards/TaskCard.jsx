@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import { Box } from "@mui/material";
 import Icon from "../../Icon";
 import styles from "./TaskCard.module.css";
-import { deleteCard, getCards } from "../../api/cardAPI";
+import { deleteCard } from "../../api/cardAPI";
+import EditCardModal from "../../modals/cards/EditCardModal";
 
 const TaskCard = ({
   id,
@@ -12,16 +13,25 @@ const TaskCard = ({
   priority = "gray",
   deadline,
 }) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const cardData = { _id: id, title, description, priority, deadline };
+
   const formattedDate = dayjs(deadline).format("MM/DD/YYYY");
 
   const handleDelete = async () => {
     await deleteCard(id);
     console.log("Card deleted:", id);
     window.location.reload();
-    // getCards();
   };
 
-  const handleEdit = async () => {};
+  const handleEdit = async () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  };
 
   const handleRedirect = async () => {};
 
@@ -58,9 +68,15 @@ const TaskCard = ({
           <div className={styles.actionButtons}>
             <button onClick={handleRedirect}>
               <Box sx={{ alignSelf: "flex-end", cursor: "pointer" }}>
-                {
-                  isTodayDeadline && (<Icon name="bell" width={14} height={16} stroke="#BEDBB0" />)
-                }
+                {isTodayDeadline && (
+                  <Icon
+                    name="bell"
+                    width={14}
+                    height={16}
+                    stroke="#BEDBB0"
+                    className={styles.bellIcon}
+                  />
+                )}
               </Box>
             </button>
             <button onClick={handleRedirect}>
@@ -79,6 +95,13 @@ const TaskCard = ({
                 <Icon name="delete" width={16} height={16} />
               </Box>
             </button>
+            {isEditModalOpen && (
+              <EditCardModal
+                open={isEditModalOpen}
+                onClose={handleCloseEditModal}
+                cardData={cardData}
+              />
+            )}
           </div>
         </div>
       </div>

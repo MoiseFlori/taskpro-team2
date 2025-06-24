@@ -1,19 +1,16 @@
-// routes/cards.js
 const express = require("express");
 const router = express.Router();
 const Card = require("../../controllers/card");
 
 router.post("/", async (req, res) => {
     try {
-        console.log("📬 Primit card:", req.body);
+        console.log("Primit card:", req.body);
       const newCard = new Card(req.body);
-      console.log("🎯 Validăm:", newCard.validateSync());
+      console.log("Validăm:", newCard.validateSync());
         const savedCard = await newCard.save();
-        console.log("💾 Card salvat:", savedCard);
+        console.log("Card salvat:", savedCard);
         res.status(201).json({ message: "✅ Card salvat cu succes", card: savedCard });
-    } catch (err) {
-      // console.error("❌ Error at saving:", err.name, err.message);
-      // if (err.errors) console.error("📛 Validare:", err.errors);     
+    } catch (err) {   
       res.status(500).json({ error: "Error saving card", details: err.message });
     }
 });
@@ -35,6 +32,59 @@ router.delete("/:id", async (req, res) => {
     res.json({ message: "Card deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: "Error deleting card" });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { Types } = require("mongoose");
+
+    if (!Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    const card = await Card.findById(req.params.id);
+
+    if (!card) {
+      return res.status(404).json({ message: "Card not found" });
+    }
+
+    res.json(card);
+  } catch (err) {
+    console.error("GET error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+router.patch("/:id", async (req, res) => {
+  try {
+    const { Types } = require("mongoose");
+
+    if (!Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    const objectId = new Types.ObjectId(req.params.id);
+
+    const updatedCard = await Card.findByIdAndUpdate(
+      objectId,
+      req.body, {
+      new: true,
+    });
+
+    console.log("PATCH primit pentru ID:", objectId);
+    console.log("Corpul cererii:", req.body);
+
+
+    if (!updatedCard) {
+      console.warn("Card not found with ID:", objectId);
+      return res.status(404).json({ message: "Card not found" });
+    }
+
+    res.json(updatedCard);
+  } catch (err) {
+    console.error("PATCH error:", err);
+    res.status(500).json({ error: "Error updating card" });
   }
 });
 
