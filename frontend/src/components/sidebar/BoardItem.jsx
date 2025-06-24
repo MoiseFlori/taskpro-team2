@@ -19,7 +19,7 @@ const BoardItem = ({ board, onOpenModal, isActive, onClick }) => {
       <span className={styles.iconWrap}>
         <Icon name={board.icon} width={20} height={20} />
       </span>
-      <span>{board.title}</span>
+      <span className={styles.boardTitle}>{board.title}</span>
       <div className={styles.actions}>
         <button
           className={styles.editBtn}

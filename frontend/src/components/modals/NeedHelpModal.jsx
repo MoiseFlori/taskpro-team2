@@ -13,16 +13,27 @@ const NeedHelpModal = ({ onClose }) => {
   const dispatch = useDispatch();
   const loading = useSelector(selectHelpLoading);
   const error = useSelector(selectHelpError);
+  const [success, setSuccess] = useState(false);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(sendHelpRequest({ email, comment }));
-    onClose();
+    setSuccess(true);
+    setTimeout(() => {
+      setSuccess(false);
+      onClose();
+    }, 2000); // show the message for 2 seconds
   };
 
   return (
     <ModalWrapper onClose={onClose}>
       <h2 className={styles.modalTitle}>Need help</h2>
+      {success ? (
+      <div className={styles.successMessage}>
+        Help request sent! We’ll get back to you soon.
+      </div>
+    ) : (
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -41,13 +52,14 @@ const NeedHelpModal = ({ onClose }) => {
           required
         />
 
-        <button type="submit" className={styles.submitBtn} disabled={loading}>
+<button type="submit" className={styles.submitBtn} disabled={loading}>
           {loading ? "Sending..." : "Send"}
         </button>
         {error && <div className={styles.error}>{error}</div>}
       </form>
-    </ModalWrapper>
-  );
+    )}
+  </ModalWrapper>
+);
 };
 
 export default NeedHelpModal;
