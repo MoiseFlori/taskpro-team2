@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { logoutThunk } from "../../redux/auth/authThunk";
 
 const Sidebar = ({
+  isOpen = true, // default to always open for desktop, controlled for mobile
+  onClose,       // function to close the sidebar
   onOpenModal,
   boards = [],
   selectedBoardId,
@@ -25,7 +27,7 @@ const Sidebar = ({
   };
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
       <div className={styles.logoWrap}>
         <Icon
           name="logo"
@@ -35,6 +37,13 @@ const Sidebar = ({
           aria-label="Task Pro Logo"
         />
         <span className={styles.logoText}>Task Pro</span>
+        <button
+    className={styles.closeBtn}
+    onClick={onClose}
+    aria-label="Close sidebar"
+  >
+    <Icon name="x-close" width={24} height={24} />
+  </button>
       </div>
 
       <div className={styles.sidebarContent}>

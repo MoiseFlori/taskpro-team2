@@ -6,7 +6,7 @@ export const sendHelpRequest = createAsyncThunk(
   "help/sendHelpRequest",
   async (helpData, thunkAPI) => {
     try {
-      const { data } = await axios.post("/help", helpData);
+      const { data } = await axios.post("/api/help", helpData);
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response?.data?.message || err.message);
