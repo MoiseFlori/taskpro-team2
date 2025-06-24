@@ -1,35 +1,51 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 24px;
   height: 100vh;
-  background-color: var(--bg-sidebar);
-  width: 100%; 
+  min-height: 0;
+  width: 100vw;
+  padding: 12px;
+  overflow-y: auto;
+}
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
-/* Tablet and up: fixed sidebar */
-@media screen and (min-width: 768px) {
-  .sidebar {
-    width: 240px; 
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
+.logoWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-.sectionTitle {
+.logoIcon {
+  color: var(--logo-fill);
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-sidebar);
+  letter-spacing: -0.5px;
+}
+
+.sectionLabel {
   font-size: 14px;
   color: var(--text-secondary);
-  margin: 16px 0 8px;
+  margin: 8px 0 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color, #ECECEC);
 }
 
 .createBoardWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-bottom: 16px; 
+  padding: 12px 0 8px 0;
 }
 
 .createBoardText {
@@ -52,88 +68,34 @@
 .plusIcon {
   width: 20px;
   height: 20px;
-  color: var(--text-color); 
-}
-
-.helpCard {
-  background: rgba(0, 0, 0, 0.03); /* or themed */
-  border-radius: 8px;
-  padding: 16px;
-  margin: 24px 0;
-  text-align: center;
-}
-
-.helpCard img {
-  width: 40px;
-  margin-bottom: 12px;
-}
-
-.helpCard p {
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.helpBtn {
-  background: none;
-  border: none;
   color: var(--text-color);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
-.logoutBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-color);
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.logoutIcon {
-  width: 24px;
-  height: 24px;
-  fill: var(--text-sidebar); 
-}
-
-.logoWrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;          
-  margin-bottom: 32px; 
-}
-
-.logoIcon {
-  color: var(--logo-fill);
-  flex-shrink: 0;
-}
-
-.logoText {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-sidebar);
-  letter-spacing: -0.5px;
-  
+.boardListWrapper {
+  flex: 1 1 auto;
+  min-height: 80px;
+  overflow-y: auto;
+  margin: 12px 0 12px 0;
+  background: var(--board-list-bg, #fff);
+  border-radius: 12px;
+  box-shadow: var(--elevation-low, 0 2px 8px 0 rgba(0,0,0,0.03));
+  padding: 4px 0;
 }
 
 .boardList {
   list-style: none;
   padding: 0;
-  margin: 16px 0 0 0;  /* more space above the list */
+  margin: 8px 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;            /* space between boards */
-  border-top: 1px solid var(--border-color, #ECECEC); /* subtle divider */
+  gap: 8px;
+  border-top: 1px solid var(--border-color, #ECECEC);
 }
 
 .boardItem {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px; /* controls space between icon, text, actions */
   padding: 12px 18px;
   background: var(--board-bg, #f8f8f8);
   border-radius: 10px;
@@ -141,21 +103,40 @@
   font-weight: 500;
   color: var(--text-color);
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
   border: 2px solid transparent;
+  position: relative;
 }
 
-.boardItem:hover,
-.boardItem.active {
-  background: var(--card-bg-accent, #e2f4ea);
-  border-color: var(--primary, #609966);
+.boardItem.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--primary, #609966);
 }
 
 .boardItem .iconWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-right: 4px;
+  }
+
+  .boardTitle {
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    margin-right: 0;
+    margin-left: 0;
+    display: block;
+  }
 
 .boardItem .editBtn,
 .boardItem .deleteBtn {
@@ -175,10 +156,101 @@
   opacity: 1;
 }
 
+.boardItem span {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  text-align: left;
+  margin-left: 0;     /* Important: no margin-left */
+  margin-right: 0;    /* Or small value for gap before actions */
+}
+
+
 .actions {
-  margin-left: auto;
   display: flex;
-  gap: 2px;
+  flex-shrink: 0;
   align-items: center;
+  gap: 4px;
+}
+
+.helpCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 20px 0 24px 0;
+  text-align: left;
+  box-shadow: var(--elevation-low, 0 2px 8px 0 rgba(0,0,0,0.03));
+}
+
+.helpCard img {
+  width: 40px;
+  margin-bottom: 12px;
+}
+
+.helpCard p {
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+.helpBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+}
+.helpBtn:active,
+.helpBtn:focus {
+  outline: none;
+}
+
+.helpIcon {
+  flex-shrink: 0;
+}
+
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.logoutIcon {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-sidebar);
+}
+
+/* === Tablet and up === */
+@media (min-width: 768px) {
+  .sidebar {
+    width: 260px;
+    padding: 24px;
+  }
+  .boardListWrapper {
+    margin-top: 16px;
+  }
+  .boardItem {
+    padding: 10px 12px 10px 16px; /* Less right padding, good left space */
+    font-size: 15px;
+    gap: 8px; /* icon/text/button gap */
+  }
+  
 }
 

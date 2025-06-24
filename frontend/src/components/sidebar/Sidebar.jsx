@@ -36,37 +36,42 @@ const Sidebar = ({
         />
         <span className={styles.logoText}>Task Pro</span>
       </div>
-      <p className={styles.sectionLabel}>My boards</p>
 
-      <div className={styles.createBoardWrapper}>
-        <span className={styles.createBoardText}>Create a new board</span>
-        <button
-          className={styles.plusButton}
-          onClick={() => onOpenModal("newBoard")}
-          aria-label="Create a new board"
-        >
-          <Icon
-            name="plus"
-            width={20}
-            height={20}
-            className={styles.plusIcon}
-          />
-        </button>
+      <div className={styles.sidebarContent}>
+        <p className={styles.sectionLabel}>My boards</p>
+
+        <div className={styles.createBoardWrapper}>
+          <span className={styles.createBoardText}>Create a new board</span>
+          <button
+            className={styles.plusButton}
+            onClick={() => onOpenModal("newBoard")}
+            aria-label="Create a new board"
+          >
+            <Icon
+              name="plus"
+              width={20}
+              height={20}
+              className={styles.plusIcon}
+            />
+          </button>
+        </div>
+
+        <div className={styles.boardListWrapper}>
+          <ul className={styles.boardList}>
+            {boards.map((board) => (
+              <BoardItem
+                key={board._id}
+                board={board}
+                onOpenModal={onOpenModal}
+                isActive={selectedBoardId === board._id}
+                onClick={() => onSelectBoard(board._id)}
+              />
+            ))}
+          </ul>
+        </div>
+
+        <HelpCard onClick={() => onOpenModal("help")} />
       </div>
-
-      <ul className={styles.boardList}>
-        {boards.map((board) => (
-          <BoardItem
-            key={board._id}
-            board={board}
-            onOpenModal={onOpenModal}
-            isActive={selectedBoardId === board._id}
-            onClick={() => onSelectBoard(board._id)}
-          />
-        ))}
-      </ul>
-
-      <HelpCard onClick={() => onOpenModal("help")} />
 
       <button className={styles.logoutBtn} onClick={handleLogout}>
         <Icon
