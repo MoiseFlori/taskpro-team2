@@ -1,9 +1,5 @@
 export const getCards = async () => {
   const res = await fetch("/api/cards");
-  // if (!res.ok) {
-  //   const message = await res.text(); // în loc de .json()
-  //   throw new Error(`Server error: ${res.status} – ${message}`);
-  // }
   return await res.json();
 };
 
@@ -13,4 +9,14 @@ export const deleteCard = async (id) => {
   });
   return res.json();
 };
-  
+
+export const editCard = async (id, updatedCard) => {
+  const res = await fetch(`/api/cards/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedCard),
+  });
+  return res.json();
+};

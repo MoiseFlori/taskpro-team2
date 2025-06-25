@@ -8,6 +8,7 @@ import NeedHelpModal from "./components/modals/NeedHelpModal";
 import WelcomePage from "./pages/WelcomePage";
 import CardDashboard from "./components/dashboard/cards/CardDashboard";
 import AddCardModal from "./components/modals/cards/AddCardModal";
+import EditCardModal from "./components/modals/cards/EditCardModal";
 
 import { useState } from "react";
 import AuthPage from "./pages/AuthPage";
@@ -38,12 +39,16 @@ function App() {
         <Route path="/verify-fail" element={<VerifyFail />} />
 
         <Route
-          path="/sidebar-test/cards"
+          path="/home/cards"
           element={
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <>
                 <CardDashboard />
                 <AddCardModal
+                  open={modalOpen}
+                  onClose={() => setModalOpen(true)}
+                />
+                <EditCardModal
                   open={modalOpen}
                   onClose={() => setModalOpen(true)}
                 />
@@ -56,19 +61,19 @@ function App() {
 
         {isLoggedIn && (
           <Route
-          path="/home"
-          element={
-            <>
-              <SidebarContainer onOpenModal={openModal} />
-              {activeModal === "newBoard" && (
-                <NewBoardModal onClose={closeModal} />
-              )}
-              {activeModal === "editBoard" && (
-                <EditBoardModal board={activeBoard} onClose={closeModal} />
-              )}
-              {activeModal === "help" && (
-                <NeedHelpModal onClose={closeModal} />
-              )}
+            path="/home"
+            element={
+              <>
+                <SidebarContainer onOpenModal={openModal} />
+                {activeModal === "newBoard" && (
+                  <NewBoardModal onClose={closeModal} />
+                )}
+                {activeModal === "editBoard" && (
+                  <EditBoardModal board={activeBoard} onClose={closeModal} />
+                )}
+                {activeModal === "help" && (
+                  <NeedHelpModal onClose={closeModal} />
+                )}
               </>
             }
           />

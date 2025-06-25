@@ -47,3 +47,55 @@ const CustomDateSelector = ({ onChange }) => {
 };
 
 export default CustomDateSelector;
+
+
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import dayjs from "dayjs";
+// import { Button, Box } from "@mui/material";
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+// const CustomDateSelector = ({ value, onChange, disablePast = false }) => {
+//   const [open, setOpen] = useState(false);
+//   const formatted = dayjs(value).format("MMMM D");
+
+//   return (
+//     <Box sx={{ marginBottom: "40px" }}>
+//       <DatePicker
+//         open={open}
+//         onClose={() => setOpen(false)}
+//         value={value}
+//         onChange={(newValue) => {
+//           setOpen(false);
+//           if (newValue) {
+//             onChange?.(newValue);
+//           }
+//         }}
+//         disablePast={disablePast}
+//         slotProps={{
+//           textField: {
+//             style: { display: "none" },
+//           },
+//         }}
+//       />
+
+//       <Button
+//         variant="text"
+//         onClick={() => setOpen(true)}
+//         endIcon={<ExpandMoreIcon />}
+//         sx={{
+//           fontFamily: "var(--font-family)",
+//           textTransform: "none",
+//           fontWeight: 500,
+//           fontSize: "14px",
+//           lineHeight: "100%",
+//           letterSpacing: "-2%",
+//           color: "#BEDBB0",
+//         }}
+//       >
+//         {formatted}
+//       </Button>
+//     </Box>
+//   );
+// };
+
+// export default CustomDateSelector;
