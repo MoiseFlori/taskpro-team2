@@ -120,17 +120,17 @@ const AddCardModal = ({ open, onClose }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#8FA1D0",
-                        backgroundColor: "#8FA1D0",
+                        color: "var(--priority-blue)",
+                        backgroundColor: "var(--priority-blue)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#8FA1D0",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-blue)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-blue)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -146,17 +146,17 @@ const AddCardModal = ({ open, onClose }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#E09CB5",
-                        backgroundColor: "#E09CB5",
+                        color: "var(--priority-pink)",
+                        backgroundColor: "var(--priority-pink)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#E09CB5",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-pink)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-pink)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -172,17 +172,17 @@ const AddCardModal = ({ open, onClose }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#BEDBB0",
-                        backgroundColor: "#BEDBB0",
+                        color: "var(--priority-green)",
+                        backgroundColor: "var(--priority-green)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#BEDBB0",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-green)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-green)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -203,23 +203,23 @@ const AddCardModal = ({ open, onClose }) => {
                           width: 24,
                           height: 24,
                           borderRadius: "50%",
-                          backgroundColor: "#1616164D",
+                          backgroundColor: "var(--priority-gray)",
                         }}
                       />
                     }
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#1616164D",
-                        backgroundColor: "#1616164D",
+                        color: "var(--priority-gray)",
+                        backgroundColor: "var(--priority-gray)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#1616164D",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-gray-dark)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-gray)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -236,7 +236,9 @@ const AddCardModal = ({ open, onClose }) => {
             onChange={(newDate) => setDeadline(newDate)}
             disablePast
           >
-            <Typography sx={{ color: "#BEDBB0", fontWeight: 500 }}>
+            <Typography
+              sx={{ color: "var(--priority-green)", fontWeight: 500 }}
+            >
               {todayText} <ExpandMoreIcon fontSize="small" />
             </Typography>
           </CustomDateSelector>

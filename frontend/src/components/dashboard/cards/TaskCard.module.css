@@ -1,6 +1,6 @@
 .taskCard {
   display: flex;
-  background: #fff;
+  background: var(--white-color);
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -16,44 +16,44 @@
 }
 
 .priority-blue .priorityStripe {
-  background-color: #8FA1D0;
+  background-color: var(--priority-blue);
 }
 .priority-pink .priorityStripe {
-  background-color: #E09CB5;
+  background-color: var(--priority-pink);
 }
 .priority-green .priorityStripe {
-  background-color: #BEDBB0;
+  background-color: var(--priority-green);
 }
 .priority-gray .priorityStripe {
-  background-color: #1616164D;
+  background-color: var(--priority-gray);
 }
 
 .priority-blue .cardPriority {
   border-radius: 50%;
   width: 12px;
   height: 12px;
-  background-color: #8FA1D0;
-} 
+  background-color: var(--priority-blue);
+}
 
 .priority-pink .cardPriority {
   border-radius: 50%;
   width: 12px;
   height: 12px;
-  background-color: #E09CB5;
+  background-color: var(--priority-pink);
 }
 
 .priority-green .cardPriority {
   border-radius: 50%;
   width: 12px;
   height: 12px;
-  background-color: #BEDBB0;
+  background-color: var(--priority-green);
 }
 
 .priority-gray .cardPriority {
   border-radius: 50%;
   width: 12px;
   height: 12px;
-  background-color: #1616164D;
+  background-color: var(--priority-gray);
 }
 
 .priorityLabel {
@@ -73,24 +73,22 @@
 }
 
 .priorityTitle {
-  font-family: Poppins;
   font-weight: 400;
   font-size: 8px;
   line-height: 100%;
   letter-spacing: -2%;
-  color: #16161680;
+  color: var(--priority-gray-dark);
 }
 
 .priorityValue {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-family: Poppins;
   font-weight: 400;
   font-size: 10px;
   line-height: 100%;
   letter-spacing: -2%;
-  color: #161616;
+  color: var(--priority-value);
 }
 
 .cardFooter {
@@ -118,38 +116,35 @@
 
 .cardTitle {
   margin: 0 0 8px 0;
-  font-family: Poppins;
   font-weight: 600;
   font-size: 14px;
   line-height: 100%;
   letter-spacing: -2%;
-  color: #161616;
+  color: var(--priority-value);
 }
 
 .cardDescription {
-  font-family: Poppins;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: -2%;
-  color: #161616B2;
+  color: var(--gray-secondary);
 }
 
 .cardDeadline {
-  font-family: Poppins;
   font-weight: 400;
   font-size: 8px;
   line-height: 100%;
   letter-spacing: -2%;
-  color: #16161680;
+  color: var(--priority-gray-dark);
   padding-bottom: 15px;
 }
 
 .horizontalLine {
-  border-top: 1px solid #1616161A;
+  border-top: 1px solid var(--priority-gray-value-dark);
   margin: 14px 0;
 }
 
 .bellIcon {
-  color: #BEDBB0;
+  color: var(--priority-green);
 }
