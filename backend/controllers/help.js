@@ -15,7 +15,7 @@ exports.sendHelpRequest = async (req, res) => {
     // Send email
     const msg = {
       to: process.env.HELP_TO_EMAIL,
-      from: process.env.HELP_FROM_EMAIL,
+      from: process.env.SENDGRID_SENDER_EMAIL,
       subject: "TaskPro - Help Request",
       text: `User email: ${email}\n\nComment:\n${comment}`,
     };
