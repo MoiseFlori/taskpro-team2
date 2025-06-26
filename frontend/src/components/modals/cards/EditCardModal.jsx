@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import {
   Modal,
   Box,
@@ -9,6 +9,8 @@ import {
   Radio,
   FormControlLabel,
 } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import Icon from "../../Icon";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -18,51 +20,61 @@ import styles from "./AddCardModal.module.css";
 import style from "../Modal.module.css";
 import "../../../index.css";
 import { editCard } from "../../api/cardAPI";
+import CircleIcon from "@mui/icons-material/FiberManualRecord";
 
 
-const EditCardModal = ({ open, onClose, cardData }) => {
-  const [title, setTitle] = useState(cardData?.title ?? "");
-  const [description, setDescription] = useState(cardData?.description ?? "");
-  const [priority, setPriority] = useState(cardData?.priority ?? "gray");
-  const [deadline, setDeadline] = useState(dayjs(cardData?.deadline) ?? dayjs());
+const validationSchema = Yup.object({
+  title: Yup.string()
+    .required("Insert the title")
+    .min(3, "Minim 3 characters"),
+  deadline: Yup.date()
+    .required("Insert the deadline")
+    .typeError("Invalid date"),
+});
 
-  const todayText = `Today, ${dayjs().format("MMMM D")}`;
+const EditCardModal = ({ open, onClose, cardData, onUpdate }) => {
+  
+  const initialValues = useMemo(
+    () => ({
+      title: cardData?.title ?? "",
+      description: cardData?.description ?? "",
+      priority: cardData?.priority || "gray",
+      deadline: dayjs(cardData?.deadline) ?? dayjs(),
+    }),
+    [cardData]
+  );
 
-  useEffect(() => {
-    if (cardData) {
-      setTitle(cardData.title);
-      setDescription(cardData.description);
-      setPriority(cardData.priority);
-      setDeadline(dayjs(cardData.deadline));
-    }
-  }, [cardData]);
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      if (!values.title.trim()) return alert("Insert the title");
+      if (!values.deadline || !values.deadline.isValid())
+        return alert("Invalid deadline");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const updatedCard = {
-      title,
-      description,
-      priority,
-      deadline: deadline.toISOString(),
-    };
+      const updatedCard = {
+        title: values.title,
+        description: values.description,
+        priority: values.priority,
+        deadline: values.deadline.toISOString(),
+      };
 
-    if (!title.trim()) {
-      return alert("Titlul este obligatoriu");
-    }
+      const cardId = cardData._id || cardData.id;
+      if (!cardId) return alert("No ID for update");
 
-    if (!deadline || !deadline.isValid()) {
-      return alert("Deadline invalid");
-    }
-    
-    const cardId = cardData._id || cardData.id;
-    if (!cardId) return alert("No ID for update");
+      try {
+        const updated = await editCard(cardId, updatedCard);
+        console.log("✅ Server response:", updated);
+        onUpdate?.();
+        onClose();
+      } catch (error) {
+        console.error("Error updating:", error);
+      }
+    },
+  });
 
-    const updated = await editCard(cardId, updatedCard);
-
-    console.log("✅ Server response:", updated);
-    onClose();
-    window.location.reload();
-  };
+  const todayText = `Today, ${dayjs(formik.values.deadline).format("MMMM D")}`;
  
 
   return (
@@ -86,13 +98,17 @@ const EditCardModal = ({ open, onClose, cardData }) => {
           <Icon name="x-close" size={18} />
         </Box>
         <span className={styles.addCardSpan}>Edit card</span>
-        <form onSubmit={handleSubmit} className={styles.addCardForm}>
+        <form onSubmit={formik.handleSubmit} className={styles.addCardForm}>
           <TextField
             label="Title"
             fullWidth
             required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+            onBlur={formik.handleBlur}
             sx={{ marginBottom: "16px" }}
           />
           <TextField
@@ -100,22 +116,27 @@ const EditCardModal = ({ open, onClose, cardData }) => {
             multiline
             rows={3}
             fullWidth
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
             sx={{ marginBottom: "24px" }}
           />
           <FormControl sx={{ marginBottom: "14px" }}>
             <FormLabel sx={{ marginBottom: "4px" }}>Label color</FormLabel>
             <RadioGroup
               row
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
+              name="priority"
+              value={formik.values.priority}
+              onChange={formik.handleChange}
               sx={{ marginLeft: "8px" }}
             >
               <FormControlLabel
                 value="blue"
                 control={
                   <Radio
+                    // value="blue"
+                    disableRipple
+                    disableFocusRipple
                     sx={{
                       "&.MuiRadio-root": {
                         color: "var(--priority-blue)",
@@ -231,14 +252,10 @@ const EditCardModal = ({ open, onClose, cardData }) => {
           </FormControl>
 
           <CustomDateSelector
-            onChange={(newDate) => setDeadline(newDate)}
+            onChange={(newDate) => formik.setFieldValue("deadline", newDate)}
+            onBlur={() => formik.setFieldTouched("deadline", true)}
             disablePast
           >
-            {/* <CustomDateSelector
-                value={deadline}
-                onChange={(newDate) => setDeadline(newDate)}
-                disablePast
-         > */}
             <Typography
               sx={{ color: "var(--priority-green)", fontWeight: 500 }}
             >

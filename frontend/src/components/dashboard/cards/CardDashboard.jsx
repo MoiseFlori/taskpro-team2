@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Button } from "@mui/material";
 // import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import AddCardModal from "../../modals/cards/AddCardModal";
@@ -17,12 +17,17 @@ const CardDashboard = () => {
     setCards(data);
   };
 
+  const handleCloseModal = useCallback(() => {
+    setModalOpen(false);
+    loadCards();
+  }, []);
+
   useEffect(() => {
     loadCards();
   }, []);
 
   return (
-    <div>
+    <div className={styles.cardContainer}>
       <div className={styles.cardListWrapper}>
         <div className={styles.cardList}>
           {cards.map((card) => (
@@ -33,6 +38,7 @@ const CardDashboard = () => {
               description={card.description}
               priority={card.priority}
               deadline={card.deadline}
+              onUpdate={loadCards}
             />
           ))}
         </div>
@@ -48,10 +54,7 @@ const CardDashboard = () => {
 
       <AddCardModal
         open={modalOpen}
-        onClose={() => {
-          setModalOpen(false);
-          loadCards();
-        }}
+        onClose={handleCloseModal}
       />
     </div>
   );

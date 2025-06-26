@@ -12,6 +12,7 @@ const TaskCard = ({
   description,
   priority = "gray",
   deadline,
+  onUpdate
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -90,7 +91,6 @@ const TaskCard = ({
               </Box>
             </button>
             <button onClick={handleDelete}>
-              {/* 🗑️ */}
               <Box sx={{ alignSelf: "flex-end", cursor: "pointer" }}>
                 <Icon name="delete" width={16} height={16} />
               </Box>
@@ -100,6 +100,7 @@ const TaskCard = ({
                 open={isEditModalOpen}
                 onClose={handleCloseEditModal}
                 cardData={cardData}
+                onUpdate={onUpdate}
               />
             )}
           </div>
