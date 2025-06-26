@@ -25,9 +25,9 @@ const SidebarContainer = ({
   return (
     <>
       {/* Demo open button, remove when Header is implemented */}
-      <button onClick={() => setSidebarOpen(true)} style={{ margin: 12 }}>
+      {/* <button onClick={() => setSidebarOpen(true)} style={{ margin: 12 }}>
         Test burger menu
-      </button>
+      </button> */}
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setSidebarOpen(false)}
