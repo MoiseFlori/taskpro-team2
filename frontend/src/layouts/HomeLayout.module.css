@@ -1,0 +1,12 @@
+.homeLayout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.homeContent {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+
+}

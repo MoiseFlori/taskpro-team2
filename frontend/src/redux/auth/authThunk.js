@@ -21,8 +21,10 @@ export const loginThunk = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await axios.post("/users/login", data);
-      setAuthToken(res.data.accessToken);
-      return res.data;
+      const { accessToken, user } = res.data;
+
+      setAuthToken(accessToken);
+      return { user, token: accessToken }; 
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Login failed"
@@ -35,7 +37,7 @@ export const logoutThunk = createAsyncThunk(
   "auth/logout",
   async (_, thunkAPI) => {
     try {
-      await axios.get("/users/logout"); 
+      await axios.get("/users/logout");
       setAuthToken(null);
     } catch (error) {
       return thunkAPI.rejectWithValue(

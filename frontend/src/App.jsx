@@ -1,34 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import SidebarContainer from "./components/sidebar/SidebarContainer";
-import NewBoardModal from "./components/modals/NewBoardModal";
-import EditBoardModal from "./components/modals/EditBoardModal";
-import NeedHelpModal from "./components/modals/NeedHelpModal";
 import WelcomePage from "./pages/WelcomePage";
-import CardDashboard from "./components/dashboard/cards/CardDashboard";
-import AddCardModal from "./components/modals/cards/AddCardModal";
-import EditCardModal from "./components/modals/cards/EditCardModal";
-
-import { useState } from "react";
+import PrivateRoute from "./components/routes/PrivateRoute";
+import HomeLayout from "./layouts/HomeLayout";
 import AuthPage from "./pages/AuthPage";
 import VerifySuccess from "./pages/VerifySuccess";
 import VerifyFail from "./pages/VerifyFail";
 
-function App() {
-  const [isLoggedIn] = useState(true); // sau false pentru test
-  const [activeModal, setActiveModal] = useState(null);
-  const [activeBoard, setActiveBoard] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = (type, board = null) => {
-    setActiveModal(type);
-    setActiveBoard(board);
-  };
 
-  const closeModal = () => {
-    setActiveModal(null);
-    setActiveBoard(null);
-  };
+function App() {
 
   return (
     <BrowserRouter>
@@ -39,45 +18,14 @@ function App() {
         <Route path="/verify-fail" element={<VerifyFail />} />
 
         <Route
-          path="/home/cards"
+          path="/home"
           element={
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <>
-                <CardDashboard />
-                <AddCardModal
-                  open={modalOpen}
-                  onClose={() => setModalOpen(true)}
-                />
-                <EditCardModal
-                  open={modalOpen}
-                  onClose={() => setModalOpen(true)}
-                />
-              </>
-            </LocalizationProvider>
+            <PrivateRoute>
+              <HomeLayout />
+            </PrivateRoute>
           }
-        />
-
-        {/* Normal home route, protected by login */}
-
-        {isLoggedIn && (
-          <Route
-            path="/home"
-            element={
-              <>
-                <SidebarContainer onOpenModal={openModal} />
-                {activeModal === "newBoard" && (
-                  <NewBoardModal onClose={closeModal} />
-                )}
-                {activeModal === "editBoard" && (
-                  <EditBoardModal board={activeBoard} onClose={closeModal} />
-                )}
-                {activeModal === "help" && (
-                  <NeedHelpModal onClose={closeModal} />
-                )}
-              </>
-            }
-          />
-        )}
+        >
+        </Route>
       </Routes>
     </BrowserRouter>
   );

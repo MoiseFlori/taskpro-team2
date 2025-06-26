@@ -22,7 +22,7 @@ const CardDashboard = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.cardContainer}>
       <div className={styles.cardListWrapper}>
         <div className={styles.cardList}>
           {cards.map((card) => (

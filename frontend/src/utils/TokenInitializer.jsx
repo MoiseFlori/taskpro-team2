@@ -10,7 +10,7 @@ const TokenInitializer = () => {
     setAuthToken(token);
   }, [token]);
 
-  return null; 
+  return null;
 };
 
 export default TokenInitializer;
