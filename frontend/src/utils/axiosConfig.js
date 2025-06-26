@@ -36,7 +36,9 @@ instance.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url.includes("/users/refresh")
+      !originalRequest.url.includes("/users/refresh") &&
+      !originalRequest.url.includes("/users/login") &&
+      !originalRequest.url.includes("/users/register")
     ) {
       originalRequest._retry = true;
 
@@ -63,7 +65,7 @@ instance.interceptors.response.use(
         return instance(originalRequest);
       } catch (err) {
         isRefreshing = false;
-        getStore().dispatch(logoutThunk()); // 👈 AICI
+        getStore().dispatch(logoutThunk());
         window.location.href = "/auth/login";
         return Promise.reject(err);
       }

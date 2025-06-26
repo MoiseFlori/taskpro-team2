@@ -1,4 +1,4 @@
-import Logo from "../../components/Logo/Logo";
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Welcome.module.css";
 import StartImgMob1x from "../../assets/images/welcome-mob-1x.png";
@@ -7,6 +7,7 @@ import StartImgTab1x from "../../assets/images/welcome-tab-1x.png";
 import StartImgTab2x from "../../assets/images/welcome-tab-2x.png";
 import StartImgDesk1x from "../../assets/images/welcome-desk-1x.png";
 import StartImgDesk2x from "../../assets/images/welcome-desk-2x.png";
+import Icon from "../Icon"; 
 
 
 const Welcome = () => {
@@ -33,7 +34,14 @@ const Welcome = () => {
       </picture>
 
       <div className={styles.logoWrap}>
-        <Logo textClassName={styles.logoTextWelcome} />
+        <Icon
+          name="logo"
+          width={40}
+          height={40}
+          className={styles.logoIcon}
+          aria-label="Task Pro Logo"
+        />
+        <span className={styles.logoTextWelcome}>Task Pro</span>
       </div>
 
       <p>

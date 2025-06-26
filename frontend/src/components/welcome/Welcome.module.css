@@ -32,6 +32,7 @@
   font-size: 28px;
   line-height: 100%;
   letter-spacing: -4%;
+  font-weight: 600;
 
 }
 
@@ -87,18 +88,13 @@
     margin-bottom: 30px;
   }
 
-  .logo {
+  .logoTextWelcome {
     font-size: 40px;
   }
 
-  .logo span {
+  .logoIcon {
     width: 48px;
     height: 48px;
-  }
-
-  .logo span svg {
-    width: 18px;
-    height: 24px;
   }
 
   .authRegisterLink {

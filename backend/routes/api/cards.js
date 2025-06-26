@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Card = require("../../controllers/card");
+const Card = require("../../models/card");
 
 router.post("/", async (req, res) => {
     try {

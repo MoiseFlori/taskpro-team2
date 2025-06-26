@@ -36,7 +36,7 @@ const LoginRegisterForm = () => {
         const formData = isLogin
           ? { email: values.email, password: values.password }
           : values;
-
+    
         if (isLogin) {
           await dispatch(loginThunk(formData)).unwrap();
           resetForm();
@@ -51,14 +51,48 @@ const LoginRegisterForm = () => {
               fontSize: "16px",
             },
           });
-
           navigate("/auth/login");
         }
       } catch (error) {
         console.error("Auth failed:", error);
+
+        const message =
+          typeof error === "string"
+            ? error
+            : error?.response?.data?.message ||
+              error.message ||
+              "Something went wrong";
+
+        if (isLogin) {
+          if (message.toLowerCase().includes("email not verified")) {
+            toast.error("Please verify your email before logging in.", {
+              style: {
+                background: "#151515",
+                color: "#E74C3C",
+                fontSize: "16px",
+              },
+            });
+          } else {
+            toast.error(message, {
+              style: {
+                background: "#151515",
+                color: "#E74C3C",
+                fontSize: "16px",
+              },
+            });
+          }
+        } else {
+          toast.error(message, {
+            style: {
+              background: "#151515",
+              color: "#E74C3C",
+              fontSize: "16px",
+            },
+          });
+        }
       }
     },
-  });
+  });    
 
   return (
     <div className={styles.background}>

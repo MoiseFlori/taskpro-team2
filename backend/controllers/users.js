@@ -67,7 +67,7 @@ const login = async (req, res) => {
   }
 
   if (!user.verify) {
-    return res.status(401).json({ message: "Email not verified" });
+    return res.status(403).json({ message: "Email not verified" });
   }
 
   const accessToken = createAccessToken({ id: user._id });
