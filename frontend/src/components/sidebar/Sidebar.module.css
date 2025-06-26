@@ -261,8 +261,17 @@
   fill: var(--text-sidebar);
 }
 
-/* === Tablet and up === */
+/* === Tablet === */
 @media (min-width: 768px) {
+  .sidebar {
+    width: 260px;     /* Drawer width on tablet */
+    max-width: 90vw;  /* Fallback if viewport smaller than sidebar */
+    padding: 24px;
+  }
+}
+
+/* === Desktop === */
+@media (min-width: 1024px) {
   .sidebar {
     position: static;
     width: 260px;
