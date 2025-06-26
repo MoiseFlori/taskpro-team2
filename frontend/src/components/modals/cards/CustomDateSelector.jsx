@@ -30,15 +30,15 @@ const CustomDateSelector = ({ onChange }) => {
         variant="text"
         onClick={() => setOpen(true)}
         endIcon={<ExpandMoreIcon />}
-            sx={{
-                fontFamily: "var(--font-family)",
-                textTransform: "none",
-                fontWeight: 500,
-                fontSize: "14px",
-                lineHeight: "100%",
-                letterSpacing: "-2%",
-                color: "#BEDBB0",
-            }}
+        sx={{
+          fontFamily: "var(--font-family)",
+          textTransform: "none",
+          fontWeight: 500,
+          fontSize: "14px",
+          lineHeight: "100%",
+          letterSpacing: "-2%",
+          color: "var(--priority-green)",
+        }}
       >
         Today, {dayjs(date).format("MMMM D")}
       </Button>
@@ -89,7 +89,7 @@ export default CustomDateSelector;
 //           fontSize: "14px",
 //           lineHeight: "100%",
 //           letterSpacing: "-2%",
-//           color: "#BEDBB0",
+//           color: "var(--priority-green)",
 //         }}
 //       >
 //         {formatted}

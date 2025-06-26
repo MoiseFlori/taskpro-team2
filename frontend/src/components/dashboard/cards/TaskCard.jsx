@@ -73,7 +73,7 @@ const TaskCard = ({
                     name="bell"
                     width={14}
                     height={16}
-                    stroke="#BEDBB0"
+                    // stroke="var(--priority-green)"
                     className={styles.bellIcon}
                   />
                 )}
