@@ -17,15 +17,18 @@ import { setStore } from "../../utils/storeRef";
 
 import boardsReducer from "../boards/boardsSlice";
 
+import cardsReducer from "../cards/cardsSlice"; 
+
 const rootReducer = combineReducers({
   auth: authReducer,
   boards: boardsReducer,
+  cards: cardsReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "boards"],
+  whitelist: ["auth", "boards", "cards"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -129,6 +129,12 @@
   line-height: 16px;
   letter-spacing: -2%;
   color: var(--gray-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* Standard property for compatibility */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardDeadline {

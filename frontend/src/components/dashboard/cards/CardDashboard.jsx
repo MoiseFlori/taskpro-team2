@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Button } from "@mui/material";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import AddCardModal from "../../modals/cards/AddCardModal";
 import TaskCard from "./TaskCard";
@@ -52,10 +53,8 @@ const CardDashboard = () => {
         <span className={style.plusBtn}>+</span> Add
       </button>
 
-      <AddCardModal
-        open={modalOpen}
-        onClose={handleCloseModal}
-      />
+      <AddCardModal open={modalOpen} onClose={handleCloseModal} />
+      <ToastContainer position="top-left" autoClose={2000} />
     </div>
   );
 };

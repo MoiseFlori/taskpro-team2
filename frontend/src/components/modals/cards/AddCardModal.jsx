@@ -11,6 +11,9 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { createCard } from "../../../redux/cards/cardsSlice";
+import { toast } from "react-toastify";
 import Icon from "../../Icon";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -19,6 +22,7 @@ import CustomDateSelector from "./CustomDateSelector";
 import styles from "./AddCardModal.module.css";
 import style from "../Modal.module.css";
 import "../../../index.css";
+
 
 
 const validationSchema = Yup.object({
@@ -35,6 +39,8 @@ const validationSchema = Yup.object({
 
 
 const AddCardModal = ({ open, onClose }) => {
+
+  const dispatch = useDispatch();
   
   const initialValues = useMemo(
     () => ({
@@ -70,19 +76,42 @@ const AddCardModal = ({ open, onClose }) => {
       }
 
       try {
-        const response = await fetch("/api/cards", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(cardData),
-        });
-
-      if (response.ok) {
-        formik.resetForm(); // after submit
+        await dispatch(createCard(cardData)).unwrap(); // unwrap - catches errors directly from thunk
+        formik.resetForm();
         onClose();
-      }
+        toast.success("✅ Card added successfully!");
       } catch (err) {
-        console.error("Error sending the card: ", err);
+        console.error("Error at adding:", err);
+        toast.error("❌ Card adding failed. Check the token or the fields.");
       }
+      
+      // try {
+      //   await dispatch(createCard(cardData)).unwrap(); // unwrap - catches errors directly from thunk
+      //   formik.resetForm();
+      //   onClose();
+      // } catch (err) {
+      //   console.error("Crearea cardului a eșuat:", err);
+      //   alert("Nu am putut salva cardul. Verifică datele sau autentificarea.");
+      // }
+
+      // try {
+      //   const token = localStorage.getItem("token");
+      //   const response = await fetch("/api/cards", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //     body: JSON.stringify(cardData),
+      //   });
+
+      // if (response.ok) {
+      //   formik.resetForm(); // after submit
+      //   onClose();
+      // }
+      // } catch (err) {
+      //   console.error("Error sending the card: ", err);
+      // }
     },
   });
 
