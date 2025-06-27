@@ -10,6 +10,11 @@ const CardSchema = new mongoose.Schema({
   },
   deadline: { type: Date, required: true },
   createdAt: { type: Date, default: Date.now },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Card", CardSchema);

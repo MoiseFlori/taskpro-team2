@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { Box } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { deleteCard } from "../../../redux/cards/cardsSlice";
+import { toast } from "react-toastify";
 import Icon from "../../Icon";
 import styles from "./TaskCard.module.css";
-import { deleteCard } from "../../api/cardAPI";
+// import { deleteCard } from "../../api/cardAPI";
 import EditCardModal from "../../modals/cards/EditCardModal";
+// import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const TaskCard = ({
   id,
@@ -20,11 +26,24 @@ const TaskCard = ({
 
   const formattedDate = dayjs(deadline).format("MM/DD/YYYY");
 
+  const dispatch = useDispatch();
+
   const handleDelete = async () => {
-    await deleteCard(id);
-    console.log("Card deleted:", id);
-    window.location.reload();
+    try {
+      await dispatch(deleteCard(id)).unwrap();
+      toast.success("✅ Card deleted successfully!");
+      onUpdate?.();
+    } catch (err) {
+      console.error("Error at deleting:", err);
+      toast.error("❌ Deleting failed. Check the token or the server.");
+    }
   };
+
+  // const handleDelete = async () => {
+  //   await deleteCard(id);
+  //   console.log("Card deleted:", id);
+  //   window.location.reload();
+  // };
 
   const handleEdit = async () => {
     setIsEditModalOpen(true);
@@ -74,7 +93,6 @@ const TaskCard = ({
                     name="bell"
                     width={14}
                     height={16}
-                    // stroke="var(--priority-green)"
                     className={styles.bellIcon}
                   />
                 )}
@@ -96,12 +114,15 @@ const TaskCard = ({
               </Box>
             </button>
             {isEditModalOpen && (
-              <EditCardModal
-                open={isEditModalOpen}
-                onClose={handleCloseEditModal}
-                cardData={cardData}
-                onUpdate={onUpdate}
-              />
+              <>
+                <EditCardModal
+                  open={isEditModalOpen}
+                  onClose={handleCloseEditModal}
+                  cardData={cardData}
+                  onUpdate={onUpdate}
+                />
+                {/* <ToastContainer position="top-right" autoClose={3000} /> */}
+              </>
             )}
           </div>
         </div>

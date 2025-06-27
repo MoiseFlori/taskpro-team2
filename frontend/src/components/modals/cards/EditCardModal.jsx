@@ -11,6 +11,9 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { updateCard } from "../../../redux/cards/cardsSlice";
+import { toast } from "react-toastify";
 import Icon from "../../Icon";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -19,8 +22,8 @@ import CustomDateSelector from "./CustomDateSelector";
 import styles from "./AddCardModal.module.css";
 import style from "../Modal.module.css";
 import "../../../index.css";
-import { editCard } from "../../api/cardAPI";
-import CircleIcon from "@mui/icons-material/FiberManualRecord";
+// import { editCard } from "../../api/cardAPI";
+
 
 
 const validationSchema = Yup.object({
@@ -33,6 +36,8 @@ const validationSchema = Yup.object({
 });
 
 const EditCardModal = ({ open, onClose, cardData, onUpdate }) => {
+
+  const dispatch = useDispatch();
   
   const initialValues = useMemo(
     () => ({
@@ -60,17 +65,32 @@ const EditCardModal = ({ open, onClose, cardData, onUpdate }) => {
         deadline: values.deadline.toISOString(),
       };
 
-      const cardId = cardData._id || cardData.id;
-      if (!cardId) return alert("No ID for update");
+      // const cardId = cardData._id || cardData.id;
+      const cardId = cardData?._id;
+      if (!cardId) return toast.error("No ID for update");
 
       try {
-        const updated = await editCard(cardId, updatedCard);
-        console.log("✅ Server response:", updated);
+        await dispatch(updateCard({ id: cardId, updatedCard })).unwrap();
         onUpdate?.();
+        formik.resetForm();
         onClose();
-      } catch (error) {
-        console.error("Error updating:", error);
+        toast.success("✅ Card updated successfully!");
+      } catch (err) {
+        console.error("Error at update:", err);
+        toast.error(
+          "❌ Card update failed. Check the token or the fields."
+        );
       }
+      
+
+      // try {
+      //   const updated = await editCard(cardId, updatedCard);
+      //   console.log("✅ Server response:", updated);
+      //   onUpdate?.();
+      //   onClose();
+      // } catch (error) {
+      //   console.error("Error updating:", error);
+      // }
     },
   });
 
