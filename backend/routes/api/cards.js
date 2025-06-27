@@ -3,9 +3,6 @@ const router = express.Router();
 const Card = require("../../models/card");
 const auth = require("../../middlewares/auth");
 
-// router.get("/check", auth, (req, res) => {
-//   res.json({ isAuthenticated: true, userId: req.user._id });
-// });
 
 router.post("/", auth, async (req, res) => {
     try {
@@ -21,7 +18,9 @@ router.post("/", auth, async (req, res) => {
       
       console.log("User logat:", req.user?._id);
       console.log("Validam:", newCard.validateSync());
+
       const savedCard = await newCard.save();
+
       console.log("Card salvat:", savedCard);
       res.status(201).json({ message: "✅ Card salvat cu succes", card: savedCard });
     } catch (err) {   

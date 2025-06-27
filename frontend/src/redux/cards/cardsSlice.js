@@ -1,63 +1,111 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios, { setAuthToken } from "../../utils/axiosConfig";
 
 export const fetchCards = createAsyncThunk(
   "cards/fetchCards",
   async (_, thunkAPI) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch("/api/cards", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return await res.json();
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+
+    if (!token) return thunkAPI.rejectWithValue("No token");
+
+    setAuthToken(token); // sets the global header
+    const res = await axios.get("/api/cards");
+    return res.data;
+    // const token = localStorage.getItem("token");
+    // const res = await fetch("/api/cards", {
+    //   headers: { Authorization: `Bearer ${token}` },
+    //   credentials: "include",
+    // });
+    // return await res.json();
   }
 );
 
 export const createCard = createAsyncThunk(
   "cards/createCard",
   async (cardData, thunkAPI) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch("/api/cards", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(cardData),
-    });
+    const token = thunkAPI.getState().auth.token;
+    if (!token) return thunkAPI.rejectWithValue("No token");
 
-    const data = await res.json();
-    if (!res.ok) {
-      return thunkAPI.rejectWithValue(data);
+    setAuthToken(token);
+    try {
+        const res = await axios.post("/api/cards", cardData, { withCredentials: true });
+        return res.data.card;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response?.data || "Error adding card");
     }
+    // const token = localStorage.getItem("token");
+    // const res = await fetch("/api/cards", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   credentials: "include",
+    //   body: JSON.stringify(cardData),
+    // });
 
-    return data.card;
+    // const data = await res.json();
+    // if (!res.ok) {
+    //   return thunkAPI.rejectWithValue(data);
+    // }
+
+    // return data.card;
   }
 );
   
 export const deleteCard = createAsyncThunk(
   "cards/deleteCard",
   async (id, thunkAPI) => {
-    const token = localStorage.getItem("token");
-    await fetch(`/api/cards/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return id;
+    const token = thunkAPI.getState().auth.token;
+    if (!token) return thunkAPI.rejectWithValue("No token");
+
+    setAuthToken(token);  
+    try {
+        await axios.delete(`/api/cards/${id}`, { withCredentials: true });
+        return id;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(
+        error.response?.data || "Error deleting card"
+        );
+    }
+        
+    // const token = localStorage.getItem("token");
+    // await fetch(`/api/cards/${id}`, {
+    //   method: "DELETE",
+    //   headers: { Authorization: `Bearer ${token}` },
+    //   credentials: "include",
+    // });
+    // return id;
   }
 );
 
 export const updateCard = createAsyncThunk(
   "cards/updateCard",
   async ({ id, updatedCard }, thunkAPI) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`/api/cards/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(updatedCard),
-    });
-    return await res.json();
+    const token = thunkAPI.getState().auth.token;
+    if (!token) return thunkAPI.rejectWithValue("No token");
+        
+    setAuthToken(token);
+    try {
+      const res = await axios.patch(`/api/cards/${id}`, updatedCard, { withCredentials: true });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Error updating card"
+    );
+    }
+    // const token = localStorage.getItem("token");
+    // const res = await fetch(`/api/cards/${id}`, {
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   credentials: "include",
+    //   body: JSON.stringify(updatedCard),
+    // });
+    // return await res.json();
   }
 );
 
@@ -73,12 +121,16 @@ const cardsSlice = createSlice({
       .addCase(fetchCards.pending, (state) => {
         state.loading = true;
       })
+    //   .addCase(fetchCards.fulfilled, (state, action) => {
+    //     state.loading = false;
+    //     state.items = action.payload;
+    //   })
       .addCase(fetchCards.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        state.items = Array.isArray(action.payload) ? action.payload : [];
       })
       .addCase(createCard.fulfilled, (state, action) => {
-        state.items.unshift(action.payload); // Adauga cardul nou in lista
+        state.items.unshift(action.payload); // Adds new card in list
       })
       .addCase(deleteCard.fulfilled, (state, action) => {
         state.items = state.items.filter((card) => card._id !== action.payload);
