@@ -9,6 +9,7 @@ import styles from "./HomeLayout.module.css";
 import CardDashboard from "../components/dashboard/cards/CardDashboard";
 import { useState } from "react";
 import Header from "../components/header/Header";
+import Dashboard from "../components/dashboard/Dashboard";
 
 const HomeLayout = () => {
   const [activeModal, setActiveModal] = useState(null);
@@ -36,14 +37,10 @@ const HomeLayout = () => {
       )}
       {activeModal === "help" && <NeedHelpModal onClose={closeModal} />}
 
-
-
       <main className={styles.homeContent}>
         <Header />
 
-        {/* aici vine componenta cu coloanele to do/in progress/done */}
-
-        <CardDashboard />
+        <Dashboard />
       </main>
     </div>
   );

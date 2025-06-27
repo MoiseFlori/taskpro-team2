@@ -5,6 +5,7 @@ import Icon from "../Icon";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutThunk } from "../../redux/auth/authThunk";
+import { setSelectedBoard } from "../../redux/boards/selectedBoardSlice";
 
 const Sidebar = ({
   isOpen = true, // default to always open for desktop, controlled for mobile
@@ -12,8 +13,8 @@ const Sidebar = ({
   onOpenModal,
   boards = [],
   selectedBoardId,
-  onSelectBoard,
 }) => {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,6 +25,9 @@ const Sidebar = ({
     } catch (error) {
       console.error("Logout failed:", error);
     }
+  };
+  const handleSelectBoard = (board) => {
+    dispatch(setSelectedBoard(board));
   };
 
   return (
@@ -73,7 +77,7 @@ const Sidebar = ({
                 board={board}
                 onOpenModal={onOpenModal}
                 isActive={selectedBoardId === board._id}
-                onClick={() => onSelectBoard(board._id)}
+                onSelectBoard={handleSelectBoard}
               />
             ))}
           </ul>

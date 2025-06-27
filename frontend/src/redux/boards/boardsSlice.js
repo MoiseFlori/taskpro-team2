@@ -103,7 +103,7 @@ const boardsSlice = createSlice({
           state.boards = [
             ...state.boards.slice(0, idx),
             action.payload,
-            ...state.boards.slice(idx + 1)
+            ...state.boards.slice(idx + 1),
           ];
         }
       })

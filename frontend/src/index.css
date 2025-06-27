@@ -1,5 +1,18 @@
-@import './reset.css';
 @import "./font.css";
+@import './reset.css';
+
+
+html {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  line-height: 1.5;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+
+}
 
 :root {
   --bg-color: #F6F6F7;
@@ -10,11 +23,13 @@
   --text-secondary: rgba(22, 22, 22, 0.7);
   --card-bg-accent: #BEDBB0;
   --logo-fill: #161616;
-  --logo-bolt: #ffffff;    
+  --logo-bolt: #ffffff;
   --light-green-gradient: linear-gradient(180deg, #ffffff 25%, #bedbb0 92.19%);
   --white-color: #FFFFFF;
   --black-color: #161616;
   --easedTransition: 350ms ease-in-out;
+  --add-column-main-background: #FFFFFF;
+  --plus-icon-add-column-button: #161616;
 }
 
 [data-theme='dark'] {
@@ -24,8 +39,10 @@
   --text-color: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.5);
   --card-bg-accent: #BEDBB0;
-  --logo-fill:#161616;
-  --logo-bolt: #ffffff;   
+  --logo-fill: #161616;
+  --logo-bolt: #ffffff;
+  --add-column-main-background: #121212;
+  --plus-icon-add-column-button: #161616;
 }
 
 [data-theme='violet'] {
@@ -36,5 +53,7 @@
   --text-secondary: #161616B2;
   --card-bg-accent: #5255BC;
   --logo-fill: #5255BC;
-  --logo-bolt: #fff;      
+  --logo-bolt: #fff;
+  --add-column-main-background: #FFFFFF;
+  --plus-icon-add-column-button: #5255BC;
 }

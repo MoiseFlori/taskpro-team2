@@ -23,14 +23,11 @@ dd {
 }
 
 
-body {
-  line-height: 1.5;
-  font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-
-
+*,
+*::before,
+*::after {
+  font-family: inherit;
 }
-
 
 ul[role='list'],
 ol[role='list'],
