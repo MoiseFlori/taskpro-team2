@@ -1,5 +1,4 @@
 .addCardSpan {
-    font-family: Poppins;
     font-weight: 500;
     font-size: 18px;
     line-height: 100%;
@@ -7,3 +6,4 @@
     color: var(--text-color);
     margin-bottom: 24px;
 }
+

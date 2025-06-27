@@ -18,17 +18,22 @@ import selectedBoardReducer from "../boards/selectedBoardSlice";
 import boardsReducer from "../boards/boardsSlice";
 import columnsReducer from "../columns/columnsSlice";
 
+import cardsReducer from "../cards/cardsSlice"; 
+
 const rootReducer = combineReducers({
   auth: authReducer,
   boards: boardsReducer,
+
   selectedBoard: selectedBoardReducer,
   columns: columnsReducer,
+  cards: cardsReducer,
+
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "boards"],
+  whitelist: ["auth", "boards", "cards"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import {
   Modal,
   Box,
@@ -9,6 +9,11 @@ import {
   Radio,
   FormControlLabel,
 } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { updateCard } from "../../../redux/cards/cardsSlice";
+import { toast } from "react-toastify";
 import Icon from "../../Icon";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -17,52 +22,79 @@ import CustomDateSelector from "./CustomDateSelector";
 import styles from "./AddCardModal.module.css";
 import style from "../Modal.module.css";
 import "../../../index.css";
-import { editCard } from "../../api/cardAPI";
+// import { editCard } from "../../api/cardAPI";
 
 
-const EditCardModal = ({ open, onClose, cardData }) => {
-  const [title, setTitle] = useState(cardData?.title ?? "");
-  const [description, setDescription] = useState(cardData?.description ?? "");
-  const [priority, setPriority] = useState(cardData?.priority ?? "gray");
-  const [deadline, setDeadline] = useState(dayjs(cardData?.deadline) ?? dayjs());
 
-  const todayText = `Today, ${dayjs().format("MMMM D")}`;
+const validationSchema = Yup.object({
+  title: Yup.string()
+    .required("Insert the title")
+    .min(3, "Minim 3 characters"),
+  deadline: Yup.date()
+    .required("Insert the deadline")
+    .typeError("Invalid date"),
+});
 
-  useEffect(() => {
-    if (cardData) {
-      setTitle(cardData.title);
-      setDescription(cardData.description);
-      setPriority(cardData.priority);
-      setDeadline(dayjs(cardData.deadline));
-    }
-  }, [cardData]);
+const EditCardModal = ({ open, onClose, cardData, onUpdate }) => {
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const updatedCard = {
-      title,
-      description,
-      priority,
-      deadline: deadline.toISOString(),
-    };
+  const dispatch = useDispatch();
+  
+  const initialValues = useMemo(
+    () => ({
+      title: cardData?.title ?? "",
+      description: cardData?.description ?? "",
+      priority: cardData?.priority || "gray",
+      deadline: dayjs(cardData?.deadline) ?? dayjs(),
+    }),
+    [cardData]
+  );
 
-    if (!title.trim()) {
-      return alert("Titlul este obligatoriu");
-    }
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      if (!values.title.trim()) return alert("Insert the title");
+      if (!values.deadline || !values.deadline.isValid())
+        return alert("Invalid deadline");
 
-    if (!deadline || !deadline.isValid()) {
-      return alert("Deadline invalid");
-    }
-    
-    const cardId = cardData._id || cardData.id;
-    if (!cardId) return alert("No ID for update");
+      const updatedCard = {
+        title: values.title,
+        description: values.description,
+        priority: values.priority,
+        deadline: values.deadline.toISOString(),
+      };
 
-    const updated = await editCard(cardId, updatedCard);
+      // const cardId = cardData._id || cardData.id;
+      const cardId = cardData?._id;
+      if (!cardId) return toast.error("No ID for update");
 
-    console.log("✅ Server response:", updated);
-    onClose();
-    window.location.reload();
-  };
+      try {
+        await dispatch(updateCard({ id: cardId, updatedCard })).unwrap();
+        onUpdate?.();
+        formik.resetForm();
+        onClose();
+        toast.success("✅ Card updated successfully!");
+      } catch (err) {
+        console.error("Error at update:", err);
+        toast.error(
+          "❌ Card update failed. Check the token or the fields."
+        );
+      }
+      
+
+      // try {
+      //   const updated = await editCard(cardId, updatedCard);
+      //   console.log("✅ Server response:", updated);
+      //   onUpdate?.();
+      //   onClose();
+      // } catch (error) {
+      //   console.error("Error updating:", error);
+      // }
+    },
+  });
+
+  const todayText = `Today, ${dayjs(formik.values.deadline).format("MMMM D")}`;
  
 
   return (
@@ -86,13 +118,17 @@ const EditCardModal = ({ open, onClose, cardData }) => {
           <Icon name="x-close" size={18} />
         </Box>
         <span className={styles.addCardSpan}>Edit card</span>
-        <form onSubmit={handleSubmit} className={styles.addCardForm}>
+        <form onSubmit={formik.handleSubmit} className={styles.addCardForm}>
           <TextField
             label="Title"
             fullWidth
             required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+            onBlur={formik.handleBlur}
             sx={{ marginBottom: "16px" }}
           />
           <TextField
@@ -100,35 +136,40 @@ const EditCardModal = ({ open, onClose, cardData }) => {
             multiline
             rows={3}
             fullWidth
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
             sx={{ marginBottom: "24px" }}
           />
           <FormControl sx={{ marginBottom: "14px" }}>
             <FormLabel sx={{ marginBottom: "4px" }}>Label color</FormLabel>
             <RadioGroup
               row
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
+              name="priority"
+              value={formik.values.priority}
+              onChange={formik.handleChange}
               sx={{ marginLeft: "8px" }}
             >
               <FormControlLabel
                 value="blue"
                 control={
                   <Radio
+                    // value="blue"
+                    disableRipple
+                    disableFocusRipple
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#8FA1D0",
-                        backgroundColor: "#8FA1D0",
+                        color: "var(--priority-blue)",
+                        backgroundColor: "var(--priority-blue)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#8FA1D0",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-blue)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-blue)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -144,17 +185,17 @@ const EditCardModal = ({ open, onClose, cardData }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#E09CB5",
-                        backgroundColor: "#E09CB5",
+                        color: "var(--priority-pink)",
+                        backgroundColor: "var(--priority-pink)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#E09CB5",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-pink)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-pink)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -170,17 +211,17 @@ const EditCardModal = ({ open, onClose, cardData }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#BEDBB0",
-                        backgroundColor: "#BEDBB0",
+                        color: "var(--priority-green)",
+                        backgroundColor: "var(--priority-green)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#BEDBB0",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-green)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-green)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -201,23 +242,23 @@ const EditCardModal = ({ open, onClose, cardData }) => {
                           width: 24,
                           height: 24,
                           borderRadius: "50%",
-                          backgroundColor: "#1616164D",
+                          backgroundColor: "var(--priority-gray)",
                         }}
                       />
                     }
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#1616164D",
-                        backgroundColor: "#1616164D",
+                        color: "var(--priority-gray)",
+                        backgroundColor: "var(--priority-gray)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#1616164D",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-gray)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-gray)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -231,15 +272,13 @@ const EditCardModal = ({ open, onClose, cardData }) => {
           </FormControl>
 
           <CustomDateSelector
-            onChange={(newDate) => setDeadline(newDate)}
+            onChange={(newDate) => formik.setFieldValue("deadline", newDate)}
+            onBlur={() => formik.setFieldTouched("deadline", true)}
             disablePast
           >
-          {/* <CustomDateSelector
-                value={deadline}
-                onChange={(newDate) => setDeadline(newDate)}
-                disablePast
-         > */}
-            <Typography sx={{ color: "#BEDBB0", fontWeight: 500 }}>
+            <Typography
+              sx={{ color: "var(--priority-green)", fontWeight: 500 }}
+            >
               {todayText} <ExpandMoreIcon fontSize="small" />
             </Typography>
           </CustomDateSelector>

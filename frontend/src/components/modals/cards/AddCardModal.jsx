@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   Modal,
   Box,
   TextField,
-  Button,
   FormControl,
   FormLabel,
   RadioGroup,
   Radio,
   FormControlLabel,
 } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { createCard } from "../../../redux/cards/cardsSlice";
+import { toast } from "react-toastify";
 import Icon from "../../Icon";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -20,51 +24,107 @@ import style from "../Modal.module.css";
 import "../../../index.css";
 
 
+
+const validationSchema = Yup.object({
+  title: Yup.string()
+    .required("Please add a title")
+    .min(3, "Minimum 3 characters"),
+  description: Yup.string()
+    .required("Please add a description")
+    .min(3, "Minimum 3 characters"),
+  deadline: Yup.date()
+    .required("Please select a deadline")
+    .typeError("Invalid date"),
+});
+
+
 const AddCardModal = ({ open, onClose }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("gray");
-  const [deadline, setDeadline] = useState(dayjs());
 
-  const todayText = `Today, ${dayjs().format("MMMM D")}`;
+  const dispatch = useDispatch();
+  
+  const initialValues = useMemo(
+    () => ({
+      // created once not at every render
+      title: "",
+      description: "",
+      priority: "gray",
+      deadline: dayjs(),
+    }), []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const cardData = {
-      title,
-      description,
-      priority,
-      deadline: deadline.toISOString(),
-    };
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      const cardData = {
+        title: values.title,
+        description: values.description,
+        priority: values.priority,
+        deadline: values.deadline.toISOString(),
+        // status: "todo",
+      };
 
-    console.log("🚀 cardData trimis:", cardData);
+      console.log("cardData sent: ", cardData);
 
-    if (!title.trim()) {
-      return alert("Titlul este obligatoriu");
-    }
-    console.log("🕒 deadline =", deadline, typeof deadline);
-
-    if (!deadline || !deadline.isValid()) {
-      return alert("Deadline invalid");
-    }
-    
-
-    try {
-      const response = await fetch("/api/cards", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cardData),
-      });
-
-      if (response.ok) {
-        onClose();
+      if (!values.title.trim()) {
+        return alert("Titlul este obligatoriu");
       }
-    } catch (err) {
-      console.error("Eroare la trimiterea cardului:", err);
-    }
-  };
- 
+      console.log("🕒 deadline =", values.deadline, typeof values.deadline);
 
+      if (!values.deadline || !values.deadline.isValid()) {
+        return alert("Deadline invalid");
+      }
+
+      try {
+        await dispatch(createCard(cardData)).unwrap(); // unwrap - catches errors directly from thunk
+        formik.resetForm();
+        onClose();
+        toast.success("✅ Card added successfully!");
+      } catch (err) {
+        console.error("Error at adding:", err);
+        toast.error("❌ Card adding failed. Check the token or the fields.");
+      }
+      
+      // try {
+      //   await dispatch(createCard(cardData)).unwrap(); // unwrap - catches errors directly from thunk
+      //   formik.resetForm();
+      //   onClose();
+      // } catch (err) {
+      //   console.error("Crearea cardului a eșuat:", err);
+      //   alert("Nu am putut salva cardul. Verifică datele sau autentificarea.");
+      // }
+
+      // try {
+      //   const token = localStorage.getItem("token");
+      //   const response = await fetch("/api/cards", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //     body: JSON.stringify(cardData),
+      //   });
+
+      // if (response.ok) {
+      //   formik.resetForm(); // after submit
+      //   onClose();
+      // }
+      // } catch (err) {
+      //   console.error("Error sending the card: ", err);
+      // }
+    },
+  });
+
+  useEffect(() => {
+    if (open) {
+      formik.resetForm(); // after reopening the modal
+    }
+  }, [open]);
+  
+
+  const todayText = `Today, ${dayjs(formik.values.deadline).format("MMMM D")}`;
+
+ 
   return (
     <Modal open={open} onClose={onClose} className={style.backdrop}>
       <Box
@@ -86,14 +146,17 @@ const AddCardModal = ({ open, onClose }) => {
           <Icon name="x-close" size={18} />
         </Box>
         <span className={styles.addCardSpan}>Add card</span>
-        <form onSubmit={handleSubmit} className={styles.addCardForm}>
+        <form onSubmit={formik.handleSubmit} className={styles.addCardForm}>
           <TextField
             label="Title"
             fullWidth
             required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            // className={styles.addCardTitle}
+            name="title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
             sx={{ marginBottom: "16px" }}
           />
           <TextField
@@ -101,17 +164,21 @@ const AddCardModal = ({ open, onClose }) => {
             multiline
             rows={3}
             fullWidth
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            // className={styles.addCardDescription}
+            name="description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.description && Boolean(formik.errors.description)}
+            helperText={formik.touched.description && formik.errors.description}
             sx={{ marginBottom: "24px" }}
           />
           <FormControl sx={{ marginBottom: "14px" }}>
             <FormLabel sx={{ marginBottom: "4px" }}>Label color</FormLabel>
             <RadioGroup
               row
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
+              name="priority"
+              value={formik.values.priority}
+              onChange={formik.handleChange}
               sx={{ marginLeft: "8px" }}
             >
               <FormControlLabel
@@ -120,17 +187,17 @@ const AddCardModal = ({ open, onClose }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#8FA1D0",
-                        backgroundColor: "#8FA1D0",
+                        color: "var(--priority-blue)",
+                        backgroundColor: "var(--priority-blue)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#8FA1D0",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-blue)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-blue)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -146,17 +213,17 @@ const AddCardModal = ({ open, onClose }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#E09CB5",
-                        backgroundColor: "#E09CB5",
+                        color: "var(--priority-pink)",
+                        backgroundColor: "var(--priority-pink)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#E09CB5",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-pink)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-pink)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -172,17 +239,17 @@ const AddCardModal = ({ open, onClose }) => {
                   <Radio
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#BEDBB0",
-                        backgroundColor: "#BEDBB0",
+                        color: "var(--priority-green)",
+                        backgroundColor: "var(--priority-green)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#BEDBB0",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-green)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-green)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -203,23 +270,23 @@ const AddCardModal = ({ open, onClose }) => {
                           width: 24,
                           height: 24,
                           borderRadius: "50%",
-                          backgroundColor: "#1616164D",
+                          backgroundColor: "var(--priority-gray)",
                         }}
                       />
                     }
                     sx={{
                       "&.MuiRadio-root": {
-                        color: "#1616164D",
-                        backgroundColor: "#1616164D",
+                        color: "var(--priority-gray)",
+                        backgroundColor: "var(--priority-gray)",
                         borderRadius: "50%",
                         padding: "0.5px",
                       },
                       "&.Mui-checked": {
-                        color: "#1616164D",
-                        backgroundColor: "#fff",
+                        color: "var(--priority-gray-dark)",
+                        backgroundColor: "var(--white-color)",
                       },
                       "&:hover": {
-                        backgroundColor: "#sameColor",
+                        backgroundColor: "var(--priority-gray)",
                       },
                       "&.Mui-focusVisible": {
                         outline: "none",
@@ -233,22 +300,17 @@ const AddCardModal = ({ open, onClose }) => {
           </FormControl>
 
           <CustomDateSelector
-            onChange={(newDate) => setDeadline(newDate)}
+            onChange={(newDate) => formik.setFieldValue("deadline", newDate)}
+            onBlur={() => formik.setFieldTouched("deadline", true)}
             disablePast
           >
-            <Typography sx={{ color: "#BEDBB0", fontWeight: 500 }}>
+            <Typography
+              sx={{ color: "var(--priority-green)", fontWeight: 500 }}
+            >
               {todayText} <ExpandMoreIcon fontSize="small" />
             </Typography>
           </CustomDateSelector>
 
-          {/* <Button
-            variant="contained"
-            type="submit"
-            sx={{ mt: 2 }}
-            startIcon={<span style={{ fontWeight: "bold" }}>＋</span>}
-          >
-            Add
-          </Button> */}
           <button type="submit" className={style.submitBtn}>
             <span className={style.plusBtn}>+</span> Add
           </button>
