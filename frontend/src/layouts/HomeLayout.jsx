@@ -11,6 +11,7 @@ import { useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Header from "../components/header/Header";
+import Dashboard from "../components/dashboard/Dashboard";
 
 const HomeLayout = () => {
   const [activeModal, setActiveModal] = useState(null);
@@ -28,6 +29,24 @@ const HomeLayout = () => {
   };
 
   return (
+
+    <div className={styles.homeLayout}>
+      <SidebarContainer onOpenModal={openModal} />
+      <AddCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <EditCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      {activeModal === "newBoard" && <NewBoardModal onClose={closeModal} />}
+      {activeModal === "editBoard" && (
+        <EditBoardModal board={activeBoard} onClose={closeModal} />
+      )}
+      {activeModal === "help" && <NeedHelpModal onClose={closeModal} />}
+
+      <main className={styles.homeContent}>
+        <Header />
+
+        <Dashboard />
+      </main>
+    </div>
+
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className={styles.homeLayout}>
         <SidebarContainer onOpenModal={openModal} />
@@ -48,6 +67,7 @@ const HomeLayout = () => {
         </main>
       </div>
     </LocalizationProvider>
+
   );
 };
 
