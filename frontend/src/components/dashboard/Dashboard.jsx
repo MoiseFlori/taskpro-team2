@@ -85,7 +85,7 @@ const Dashboard = () => {
                         aria-label="Edit column"
                         className={styles.iconBtn}
                       >
-                        <Icon name="edit" width={16} height={16}  />
+                        <Icon name="edit" width={16} height={16} />
                       </button>
                       <button
                         onClick={() => handleDelete(column._id)}
@@ -96,7 +96,7 @@ const Dashboard = () => {
                       </button>
                     </div>
                   </div>
-                  <CardDashboard />
+                  <CardDashboard columnId={column._id} />
                 </div>
               ))}
             </div>

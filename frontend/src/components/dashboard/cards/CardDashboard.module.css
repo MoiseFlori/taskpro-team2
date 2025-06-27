@@ -1,16 +1,14 @@
-.cardContainer {
-  padding-top: 118px;
-}
+
 
 .cardList {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 24px;
+
 }
 
 .cardListWrapper {
-  height: 535px;
+  height: 334px;
   width: 375px;
   overflow-y: auto;
   padding-right: 8px;
@@ -35,7 +33,6 @@
 .btnPosition {
   margin-top: 14px;
   margin-bottom: 16px;
-  margin-left: 24px;
   width: 334px;
   background-color: var(--priority-green);
   border: none;

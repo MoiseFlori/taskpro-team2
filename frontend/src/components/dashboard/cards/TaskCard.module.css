@@ -7,6 +7,7 @@
   margin-bottom: 8px;
   width: 334px;
   min-height: 154px;
+  margin-top: 14px;
 }
 
 .priorityStripe {
@@ -18,12 +19,15 @@
 .priority-blue .priorityStripe {
   background-color: var(--priority-blue);
 }
+
 .priority-pink .priorityStripe {
   background-color: var(--priority-pink);
 }
+
 .priority-green .priorityStripe {
   background-color: var(--priority-green);
 }
+
 .priority-gray .priorityStripe {
   background-color: var(--priority-gray);
 }
@@ -131,7 +135,8 @@
   color: var(--gray-secondary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-clamp: 2; /* Standard property for compatibility */
+  line-clamp: 2;
+  /* Standard property for compatibility */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
