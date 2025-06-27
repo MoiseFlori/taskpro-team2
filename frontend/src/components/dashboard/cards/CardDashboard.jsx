@@ -54,7 +54,7 @@ const CardDashboard = () => {
       </button>
 
       <AddCardModal open={modalOpen} onClose={handleCloseModal} />
-      <ToastContainer position="top-left" autoClose={2000} />
+      <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );
 };
