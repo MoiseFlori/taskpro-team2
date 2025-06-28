@@ -17,13 +17,11 @@ import { setStore } from "../../utils/storeRef";
 import selectedBoardReducer from "../boards/selectedBoardSlice";
 import boardsReducer from "../boards/boardsSlice";
 import columnsReducer from "../columns/columnsSlice";
-
 import cardsReducer from "../cards/cardsSlice"; 
 
 const rootReducer = combineReducers({
   auth: authReducer,
   boards: boardsReducer,
-
   selectedBoard: selectedBoardReducer,
   columns: columnsReducer,
   cards: cardsReducer,

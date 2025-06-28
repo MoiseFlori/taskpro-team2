@@ -19,7 +19,6 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editColumnData, setEditColumnData] = useState(null);
 
-  // Fetch columns when board changes
   useEffect(() => {
     if (selectedBoard?._id) {
       dispatch(fetchColumnsThunk(selectedBoard._id));
@@ -112,13 +111,15 @@ const Dashboard = () => {
           )}
         </>
       ) : (
-        <p className={styles.introText}>
-          Before starting your project, it is essential to create a board to
-          visualize and track all the necessary tasks and milestones. This board
-          serves as a powerful tool to organize the workflow and ensure
-          effective collaboration among team members.
-          <span className="highlight">create a board</span>...
-        </p>
+        <div className={styles.textContainer}>
+          <p className={styles.introText}>
+            Before starting your project, it is essential to{" "}
+            <span className={styles.highlight}>create a board</span> to
+            visualize and track all the necessary tasks and milestones. This
+            board serves as a powerful tool to organize the workflow and ensure
+            effective collaboration among team members.
+          </p>
+        </div>
       )}
     </div>
   );
