@@ -1,0 +1,73 @@
+.custom-select__control {
+  background-color: transparent;
+  border: none;
+  height: 21px;
+  gap: 4px;
+}
+
+.custom-select__control--is-focused {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.custom-select__menu {
+  background-color: var(--header-color);
+  width: 100px;
+  color: var(--grey-text-color);
+  border-radius: 6px;
+}
+
+.custom-select__indicator-separator {
+  display: none;
+}
+
+.custom-select__input-container {
+  margin: 0;
+}
+
+.custom-select__placeholder {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: var(--grey-text-color);
+  padding: 0;
+}
+
+.custom-select__value-container {
+  padding: 0;
+}
+
+.custom-select__single-value {
+  color: var(--grey-text-color);
+}
+
+.custom-select__indicators {
+  cursor: pointer;
+}
+
+.custom-select__indicator {
+  padding: 0;
+}
+
+.custom-select__option {
+  cursor: pointer;
+  transition: var(--easedTransition);
+  background-color: transparent;
+  color: var(--grey-text-color);
+}
+
+.custom-select__option--is-focused,
+.custom-select__option--is-hover {
+  background-color: transparent;
+  color: var(--accent-color);
+}
+
+.custom-select__option--is-selected {
+  background-color: rgba(204, 204, 204, 0.15);
+  color: var(--accent-color);
+}
+
+.custom-select__option--is-selected:hover {
+  color: var(--accent-color);
+}

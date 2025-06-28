@@ -3,7 +3,8 @@ import Icon from "../Icon";
 import { useDispatch } from "react-redux";
 import { deleteBoardThunk } from "../../redux/boards/boardsSlice";
 
-const BoardItem = ({ board, onOpenModal, isActive, onClick }) => {
+
+const BoardItem = ({ board, onOpenModal, isActive, onSelectBoard }) => {
   const dispatch = useDispatch();
 
   const handleDelete = (e) => {
@@ -14,7 +15,9 @@ const BoardItem = ({ board, onOpenModal, isActive, onClick }) => {
   return (
     <li
       className={`${styles.boardItem} ${isActive ? styles.active : ""}`}
-      onClick={onClick}
+      onClick={() => {
+        onSelectBoard(board); 
+      }}
     >
       <span className={styles.iconWrap}>
         <Icon name={board.icon} width={20} height={20} />
@@ -23,7 +26,7 @@ const BoardItem = ({ board, onOpenModal, isActive, onClick }) => {
       <div className={styles.actions}>
         <button
           className={styles.editBtn}
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             onOpenModal("editBoard", board);
           }}

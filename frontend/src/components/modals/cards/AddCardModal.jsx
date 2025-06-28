@@ -23,8 +23,6 @@ import styles from "./AddCardModal.module.css";
 import style from "../Modal.module.css";
 import "../../../index.css";
 
-
-
 const validationSchema = Yup.object({
   title: Yup.string()
     .required("Please add a title")
@@ -37,11 +35,9 @@ const validationSchema = Yup.object({
     .typeError("Invalid date"),
 });
 
-
-const AddCardModal = ({ open, onClose }) => {
-
+const AddCardModal = ({ open, onClose, columnId }) => {
   const dispatch = useDispatch();
-  
+
   const initialValues = useMemo(
     () => ({
       // created once not at every render
@@ -49,7 +45,9 @@ const AddCardModal = ({ open, onClose }) => {
       description: "",
       priority: "gray",
       deadline: dayjs(),
-    }), []);
+    }),
+    []
+  );
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -61,6 +59,7 @@ const AddCardModal = ({ open, onClose }) => {
         description: values.description,
         priority: values.priority,
         deadline: values.deadline.toISOString(),
+        column: columnId,
         // status: "todo",
       };
 
@@ -84,7 +83,7 @@ const AddCardModal = ({ open, onClose }) => {
         console.error("Error at adding:", err);
         toast.error("❌ Card adding failed. Check the token or the fields.");
       }
-      
+
       // try {
       //   await dispatch(createCard(cardData)).unwrap(); // unwrap - catches errors directly from thunk
       //   formik.resetForm();
@@ -120,11 +119,9 @@ const AddCardModal = ({ open, onClose }) => {
       formik.resetForm(); // after reopening the modal
     }
   }, [open]);
-  
 
   const todayText = `Today, ${dayjs(formik.values.deadline).format("MMMM D")}`;
 
- 
   return (
     <Modal open={open} onClose={onClose} className={style.backdrop}>
       <Box
@@ -168,7 +165,9 @@ const AddCardModal = ({ open, onClose }) => {
             value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.description && Boolean(formik.errors.description)}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
             helperText={formik.touched.description && formik.errors.description}
             sx={{ marginBottom: "24px" }}
           />

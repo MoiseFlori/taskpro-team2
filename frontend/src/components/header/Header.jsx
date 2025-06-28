@@ -1,18 +1,17 @@
-import React from "react";
+import styles from './Header.module.css';
+import ThemeSelect from '../themes/ThemeSwitcher';
+// import Profile from 'components/Profile/Profile';
+// import { TempForLanguages } from 'components/TempForLanguages/TempForLanguages';
 
 const Header = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "68px",
-        background: "#FCFCFC",
-      }}
-    >
-      Header
-    </div>
+    <header className={styles.headerSection}>
+      <div className={styles.headerUserWrap}>
+        {/* <TempForLanguages /> */}
+        <ThemeSelect />
+        {/* <Profile /> */}
+      </div>
+    </header>
   );
 };
 

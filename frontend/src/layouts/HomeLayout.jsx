@@ -6,9 +6,11 @@ import NeedHelpModal from "../components/modals/NeedHelpModal";
 import AddCardModal from "../components/modals/cards/AddCardModal";
 import EditCardModal from "../components/modals/cards/EditCardModal";
 import styles from "./HomeLayout.module.css";
-import CardDashboard from "../components/dashboard/cards/CardDashboard";
 import { useState } from "react";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Header from "../components/header/Header";
+import Dashboard from "../components/dashboard/Dashboard";
 
 const HomeLayout = () => {
   const [activeModal, setActiveModal] = useState(null);
@@ -26,26 +28,24 @@ const HomeLayout = () => {
   };
 
   return (
-    <div className={styles.homeLayout}>
-      <SidebarContainer onOpenModal={openModal} />
-      <AddCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
-      <EditCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
-      {activeModal === "newBoard" && <NewBoardModal onClose={closeModal} />}
-      {activeModal === "editBoard" && (
-        <EditBoardModal board={activeBoard} onClose={closeModal} />
-      )}
-      {activeModal === "help" && <NeedHelpModal onClose={closeModal} />}
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div className={styles.homeLayout}>
+        <SidebarContainer onOpenModal={openModal} />
+        <AddCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
+        <EditCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
+        {activeModal === "newBoard" && <NewBoardModal onClose={closeModal} />}
+        {activeModal === "editBoard" && (
+          <EditBoardModal board={activeBoard} onClose={closeModal} />
+        )}
+        {activeModal === "help" && <NeedHelpModal onClose={closeModal} />}
 
+        <main className={styles.homeContent}>
+          <Header />
 
-
-      <main className={styles.homeContent}>
-        <Header />
-
-        {/* aici vine componenta cu coloanele to do/in progress/done */}
-
-        <CardDashboard />
-      </main>
-    </div>
+          <Dashboard />
+        </main>
+      </div>
+    </LocalizationProvider>
   );
 };
 
