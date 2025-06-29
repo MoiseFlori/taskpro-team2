@@ -1,5 +1,9 @@
 .mainContainer {
-  padding: 10px 24px;
+  padding: 24px 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .highlight {
@@ -85,7 +89,24 @@
   margin-top: 24px;
   flex-wrap: nowrap;
   overflow-x: auto;
-  padding-bottom: 8px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  height: calc(100vh - 50px);
+  scrollbar-gutter: stable both-edges; /* it keeps the space for scrollbar */
+  /* border: 2px dashed red; */
+}
+
+.columnsContainer::-webkit-scrollbar {
+  height: 8px; /* scrollbar's height */
+}
+
+.columnsContainer::-webkit-scrollbar-thumb {
+  background-color: var(--slider-color);
+  border-radius: 4px;
+}
+
+.columnsContainer::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .columnHeader {
@@ -117,5 +138,4 @@
 
 .iconBtn:hover {
   color: var(--card-bg-accent);
-
 }
