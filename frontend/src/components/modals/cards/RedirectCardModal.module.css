@@ -1,0 +1,56 @@
+.backdropPopUp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+  
+.modalPopUp {
+  background: white;
+  padding: 18px;
+  border-radius: 8px;
+  min-width: 120px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.columnsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+  
+.redirectButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  column-gap: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -2%;
+}
+
+.redirectButton:hover {
+  color: var(--priority-green);
+}
+
+.active {
+  color: var(--priority-green);
+}
+
+.near {
+    color: var(--priority-value);
+}

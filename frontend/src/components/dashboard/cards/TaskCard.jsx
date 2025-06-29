@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { Box } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteCard } from "../../../redux/cards/cardsSlice";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Icon from "../../Icon";
 import styles from "./TaskCard.module.css";
-// import { deleteCard } from "../../api/cardAPI";
 import EditCardModal from "../../modals/cards/EditCardModal";
-// import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import RedirectCardModal from "../../modals/cards/RedirectCardModal";
+import { redirectCard } from "../../../redux/cards/cardsSlice";
 
 
 const TaskCard = ({
@@ -18,11 +18,22 @@ const TaskCard = ({
   description,
   priority = "gray",
   deadline,
+  columnId,
   onUpdate
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isRedirectModalOpen, setIsRedirectModalOpen] = useState(false);
 
-  const cardData = { _id: id, title, description, priority, deadline };
+  const columns = useSelector(state => state.columns.items)
+
+  const cardData = {
+    _id: id,
+    title,
+    description,
+    priority,
+    deadline,
+    columnId,
+  };
 
   const formattedDate = dayjs(deadline).format("MM/DD/YYYY");
 
@@ -31,19 +42,13 @@ const TaskCard = ({
   const handleDelete = async () => {
     try {
       await dispatch(deleteCard(id)).unwrap();
-      toast.success("✅ Card deleted successfully!");
+      toast.success(" Card deleted successfully!");
       onUpdate?.();
     } catch (err) {
       console.error("Error at deleting:", err);
-      toast.error("❌ Deleting failed. Check the token or the server.");
+      toast.error(" Deleting failed. Check the token or the server.");
     }
   };
-
-  // const handleDelete = async () => {
-  //   await deleteCard(id);
-  //   console.log("Card deleted:", id);
-  //   window.location.reload();
-  // };
 
   const handleEdit = async () => {
     setIsEditModalOpen(true);
@@ -53,7 +58,21 @@ const TaskCard = ({
     setIsEditModalOpen(false);
   };
 
-  const handleRedirect = async () => {};
+  const handleRedirect = async () => {
+    setIsRedirectModalOpen(true);
+  };
+
+  const handleMoveCard = async (targetColumnId) => {
+    try {
+      await dispatch(redirectCard({ cardId: id, targetColumnId })).unwrap();
+      toast.success("Card redirected successfully!");
+      setIsRedirectModalOpen(false);
+      onUpdate?.();
+    } catch (error) {
+      toast.error("Failed to redirect card.");
+      console.error(error);
+    }
+  }
 
   const isTodayDeadline = dayjs().isSame(dayjs(deadline), "day");
 
@@ -86,7 +105,7 @@ const TaskCard = ({
           </div>
 
           <div className={styles.actionButtons}>
-            <button onClick={handleRedirect}>
+            <button>
               <Box sx={{ alignSelf: "flex-end", cursor: "pointer" }}>
                 {isTodayDeadline && (
                   <Icon
@@ -103,6 +122,12 @@ const TaskCard = ({
                 <Icon name="icon-redirect" width={16} height={16} />
               </Box>
             </button>
+            <RedirectCardModal
+              open={isRedirectModalOpen}
+              onClose={() => setIsRedirectModalOpen(false)}
+              onRedirect={handleMoveCard}
+              columns={columns.filter((col) => col._id !== cardData.columnId)}
+            />
             <button onClick={handleEdit}>
               <Box sx={{ alignSelf: "flex-end", cursor: "pointer" }}>
                 <Icon name="edit" width={16} height={16} />
@@ -121,7 +146,6 @@ const TaskCard = ({
                   cardData={cardData}
                   onUpdate={onUpdate}
                 />
-                {/* <ToastContainer position="top-right" autoClose={3000} /> */}
               </>
             )}
           </div>
@@ -132,5 +156,3 @@ const TaskCard = ({
 };
 
 export default TaskCard;
-
-// dayjs(deadline).utc().format("MM/DD/YYYY");

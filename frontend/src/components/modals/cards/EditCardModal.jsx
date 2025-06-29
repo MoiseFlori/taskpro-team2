@@ -22,8 +22,6 @@ import CustomDateSelector from "./CustomDateSelector";
 import styles from "./AddCardModal.module.css";
 import style from "../Modal.module.css";
 import "../../../index.css";
-// import { editCard } from "../../api/cardAPI";
-
 
 
 const validationSchema = Yup.object({
@@ -65,7 +63,6 @@ const EditCardModal = ({ open, onClose, cardData, onUpdate }) => {
         deadline: values.deadline.toISOString(),
       };
 
-      // const cardId = cardData._id || cardData.id;
       const cardId = cardData?._id;
       if (!cardId) return toast.error("No ID for update");
 
@@ -74,23 +71,13 @@ const EditCardModal = ({ open, onClose, cardData, onUpdate }) => {
         onUpdate?.();
         formik.resetForm();
         onClose();
-        toast.success("✅ Card updated successfully!");
+        toast.success(" Card updated successfully!");
       } catch (err) {
         console.error("Error at update:", err);
         toast.error(
-          "❌ Card update failed. Check the token or the fields."
+          " Card update failed. Check the token or the fields."
         );
       }
-      
-
-      // try {
-      //   const updated = await editCard(cardId, updatedCard);
-      //   console.log("✅ Server response:", updated);
-      //   onUpdate?.();
-      //   onClose();
-      // } catch (error) {
-      //   console.error("Error updating:", error);
-      // }
     },
   });
 
@@ -154,7 +141,6 @@ const EditCardModal = ({ open, onClose, cardData, onUpdate }) => {
                 value="blue"
                 control={
                   <Radio
-                    // value="blue"
                     disableRipple
                     disableFocusRipple
                     sx={{

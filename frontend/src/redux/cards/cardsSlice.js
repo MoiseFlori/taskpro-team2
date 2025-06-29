@@ -109,6 +109,14 @@ export const updateCard = createAsyncThunk(
   }
 );
 
+export const redirectCard = createAsyncThunk(
+  "cards/redirectCard",
+  async ({ cardId, targetColumnId }) => {
+    const res = await axios.patch(`/api/cards/${cardId}`, { column: targetColumnId });
+    return res.data;
+  }
+);
+
 const cardsSlice = createSlice({
   name: "cards",
   initialState: {
@@ -121,10 +129,6 @@ const cardsSlice = createSlice({
       .addCase(fetchCards.pending, (state) => {
         state.loading = true;
       })
-    //   .addCase(fetchCards.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     state.items = action.payload;
-    //   })
       .addCase(fetchCards.fulfilled, (state, action) => {
         state.loading = false;
         state.items = Array.isArray(action.payload) ? action.payload : [];
@@ -143,6 +147,14 @@ const cardsSlice = createSlice({
           state.items[index] = action.payload;
         }
       })
+      .addCase(redirectCard.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (card) => card._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+      })
       .addMatcher(
         (action) =>
           action.type.startsWith("cards/") && action.type.endsWith("/rejected"),
@@ -153,5 +165,7 @@ const cardsSlice = createSlice({
       );
   },
 });
+
+
 
 export default cardsSlice.reducer;
