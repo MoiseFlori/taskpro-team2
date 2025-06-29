@@ -129,4 +129,43 @@ router.get("/column/:columnId", auth, async (req, res) => {
   }
 });
 
+router.get("/column/:columnId", auth, async (req, res) => {
+  try {
+    const { columnId } = req.params;
+    const { priority } = req.query;
+    const filter = {
+      column: columnId,
+      owner: req.user._id,
+    };
+    if (priority) {
+      filter.priority = priority;
+    }
+
+    let cards = await Card.find(filter);
+
+    const PRIORITY_ORDER = { green: 1, pink: 2, blue: 3, gray: 4 };
+
+    cards = cards.sort((a, b) => {
+      const prioA = PRIORITY_ORDER[a.priority] || 5;
+      const prioB = PRIORITY_ORDER[b.priority] || 5;
+      if (!priority && prioA !== prioB) return prioA - prioB;
+
+      if (a.deadline && b.deadline) {
+        const [dA, mA, yA] = a.deadline.split("/").map(Number);
+        const [dB, mB, yB] = b.deadline.split("/").map(Number);
+        const dateA = new Date(yA, mA - 1, dA);
+        const dateB = new Date(yB, mB - 1, dB);
+        return dateA - dateB;
+      }
+      return 0;
+    });
+
+    res.json(cards);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Error getting cards by column", details: err.message });
+  }
+});
+
 module.exports = router;
