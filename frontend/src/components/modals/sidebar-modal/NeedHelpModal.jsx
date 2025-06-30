@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ModalWrapper from './ModalWrapper';
-import styles from './Modal.module.css';
+import ModalWrapper from '../ModalWrapper';
+import styles from '../Modal.module.css';
 
-import { sendHelpRequest } from '../../redux/help/helpThunk';
-import { selectHelpLoading, selectHelpError } from '../../redux/help/helpSelector';
+import { sendHelpRequest } from '../../../redux/help/helpThunk';
+import { selectHelpLoading, selectHelpError } from '../../../redux/help/helpSelector';
 
 const NeedHelpModal = ({ onClose }) => {
   const [email, setEmail] = useState('');

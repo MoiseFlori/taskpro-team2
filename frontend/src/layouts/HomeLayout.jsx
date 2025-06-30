@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom";
+
 import SidebarContainer from "../components/sidebar/SidebarContainer";
-import NewBoardModal from "../components/modals/NewBoardModal";
-import EditBoardModal from "../components/modals/EditBoardModal";
-import NeedHelpModal from "../components/modals/NeedHelpModal";
+import NewBoardModal from "../components/modals/sidebar-modal/NewBoardModal";
+import EditBoardModal from "../components/modals/sidebar-modal/EditBoardModal";
+import NeedHelpModal from "../components/modals/sidebar-modal/NeedHelpModal";
 import AddCardModal from "../components/modals/cards/AddCardModal";
 import EditCardModal from "../components/modals/cards/EditCardModal";
 import styles from "./HomeLayout.module.css";

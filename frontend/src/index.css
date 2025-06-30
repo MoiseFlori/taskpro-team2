@@ -40,6 +40,7 @@ body {
   --easedTransition: 350ms ease-in-out;
   --add-column-main-background: #FFFFFF;
   --plus-icon-add-column-button: #161616;
+  --filter-icon: #161616CC;
 }
 
 [data-theme='dark'] {

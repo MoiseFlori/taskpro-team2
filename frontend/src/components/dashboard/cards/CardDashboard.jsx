@@ -7,14 +7,18 @@ import styles from "./CardDashboard.module.css";
 import style from "../../modals/Modal.module.css";
 import { fetchCards } from "../../../redux/cards/cardsSlice";
 
-
-const CardDashboard = ({ columnId }) => {
+const CardDashboard = ({ columnId, selectedPriority }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const { token } = useSelector((state) => state.auth);
   const allCards = useSelector((state) => state.cards.items);
-  const cards = allCards.filter((card) => card.column === columnId);
+
+  const filteredCards = allCards.filter(
+    (card) =>
+      card.column === columnId &&
+      (selectedPriority === "" || card.priority === selectedPriority)
+  );
 
   useEffect(() => {
     if (token) {
@@ -38,8 +42,8 @@ const CardDashboard = ({ columnId }) => {
   return (
     <div className={styles.cardListWrapper}>
       <div className={styles.cardList}>
-        {Array.isArray(cards) &&
-          cards.map((card) => (
+        {Array.isArray(filteredCards) &&
+          filteredCards.map((card) => (
             <TaskCard
               key={card._id}
               id={card._id}
