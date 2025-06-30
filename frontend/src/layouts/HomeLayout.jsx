@@ -1,4 +1,3 @@
-
 import SidebarContainer from "../components/sidebar/SidebarContainer";
 import NewBoardModal from "../components/modals/sidebar-modal/NewBoardModal";
 import EditBoardModal from "../components/modals/sidebar-modal/EditBoardModal";
@@ -16,6 +15,10 @@ const HomeLayout = () => {
   const [activeModal, setActiveModal] = useState(null);
   const [activeBoard, setActiveBoard] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const openSidebar = () => setIsSidebarOpen(true);
+  const closeSidebar = () => setIsSidebarOpen(false);
 
   const openModal = (type, board = null) => {
     setActiveModal(type);
@@ -30,7 +33,11 @@ const HomeLayout = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className={styles.homeLayout}>
-        <SidebarContainer onOpenModal={openModal} />
+        <SidebarContainer
+          onOpenModal={openModal}
+          isOpen={isSidebarOpen}
+          onClose={closeSidebar}
+        />
         <AddCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
         <EditCardModal open={modalOpen} onClose={() => setModalOpen(false)} />
         {activeModal === "newBoard" && <NewBoardModal onClose={closeModal} />}
@@ -40,7 +47,7 @@ const HomeLayout = () => {
         {activeModal === "help" && <NeedHelpModal onClose={closeModal} />}
 
         <main className={styles.homeContent}>
-          <Header />
+          <Header onBurgerClick={openSidebar} />
 
           <Dashboard />
         </main>

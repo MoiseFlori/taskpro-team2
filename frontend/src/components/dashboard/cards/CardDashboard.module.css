@@ -1,14 +1,32 @@
-
 .cardListWrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-height: calc(100vh - 200px); /* adjust depending on header/footer */
+  max-height: calc(100vh - 200px);
+  /* adjust depending on header/footer */
   width: 375px;
   overflow-y: auto;
-  padding-right: 8px;
+  /* padding-right: 2px; */
   padding-bottom: 24px;
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+  .cardListWrapper, .btnPosition, .addVariant {
+    width: 80vw !important;
+  }
+  .cardListWrapper {
+    margin-right: 1px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .cardListWrapper, .btnPosition, .addVariant {
+    width: 334px !important;
+  }
+  .cardListWrapper {
+    margin-right: 1px;
+  }
 }
 
 .cardList {
@@ -26,7 +44,7 @@
   z-index: 1;
   margin-bottom: 0;
   width: 334px;
-  background-color: var(--priority-green);
+  background-color: var(--card-bg-accent);
   border: none;
   border-radius: 8px;
   padding: 12px 16px;

@@ -1,6 +1,11 @@
 {
   "dependencies": {
+
     "@sendgrid/mail": "^8.1.5",
     "react-loader-spinner": "^6.1.6"
+
+    "@react-oauth/google": "^0.12.2",
+    "@sendgrid/mail": "^8.1.5"
+
   }
 }

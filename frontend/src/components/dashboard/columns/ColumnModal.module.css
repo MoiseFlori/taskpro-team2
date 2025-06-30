@@ -72,13 +72,13 @@
 }
 
 .plusIcon {
-  color: #fff;
+  color: var(--plus-icon);
   font-size: 14px;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--plus-icon-add-column-button);
+  background-color: var(--plus-btn);
   border-radius: 8px;
   padding: 7px;
 }
