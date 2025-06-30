@@ -281,7 +281,7 @@ const AddCardModal = ({ open, onClose, columnId }) => {
             </Typography>
           </CustomDateSelector>
 
-          <button type="submit" className={style.submitBtn}>
+          <button type="submit" className={`${style.submitBtn}  ${styles.addVariant}`}>
             <span className={style.plusBtn}>+</span> Add
           </button>
         </form>

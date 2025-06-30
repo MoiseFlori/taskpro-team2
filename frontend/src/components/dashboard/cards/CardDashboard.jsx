@@ -59,7 +59,7 @@ const CardDashboard = ({ columnId, selectedPriority }) => {
 
       <button
         type="submit"
-        className={`${style.submitBtn} ${styles.btnPosition}`}
+        className={`${style.submitBtn} ${styles.btnPosition} ${styles.addVariant}`}
         onClick={handleOpenModal}
       >
         <span className={style.plusBtn}>+</span> Add
