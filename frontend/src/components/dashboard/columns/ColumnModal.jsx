@@ -46,7 +46,12 @@ const ColumnModal = ({ isOpen, onClose, columnData, boardId }) => {
           onClick={onClose}
           aria-label="Close"
         >
-          &times;
+          <Icon
+            name="x-close"
+            width={18}
+            height={18}
+            className={styles.closeIcon}
+          />
         </button>
 
         <h2 className={styles.modalTitle}>
@@ -62,7 +67,7 @@ const ColumnModal = ({ isOpen, onClose, columnData, boardId }) => {
             className={styles.input}
           />
           <button type="submit" className={styles.submitBtn}>
-            <Icon name="plus" width={14} height={14} />
+            <Icon name="plus" width={28} height={28} className={styles.plusIcon} />
             Add
           </button>
         </form>

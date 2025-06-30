@@ -2,8 +2,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(22, 22, 22, 0.5);
   display: flex;
   justify-content: center;
@@ -15,15 +15,21 @@
   background-color: var(--bg-modal-color);
   padding: 24px;
   border-radius: 12px;
-  width: 350px;
+  width: 335px;
+  height: 221px;
   position: relative;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
 }
 
 .modalTitle {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: -0.36px;
 }
 
 .input {
@@ -31,29 +37,75 @@
   padding: 12px 16px;
   border-radius: 8px;
   border: 1px solid var(--card-bg-accent);
-  font-size: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  outline: none;
+
+
+}
+
+.input:focus {
+  border: 1px solid var(--card-bg-accent);
+  outline: none;
+  box-shadow: 0px 4px 16px 0px #16161614;
 }
 
 .submitBtn {
   background-color: var(--card-bg-accent);
   border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
+  padding: 10px 11px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
+  justify-content: center;
+  gap: 8px;
+  width: 287px;
+  height: 49px;
   font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.28px;
   cursor: pointer;
 }
 
+.submitBtn:hover {
+  background-color: var(--card-bg-accent-hover);
+}
+
+.plusIcon {
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--plus-icon-add-column-button);
+  border-radius: 8px;
+  padding: 7px;
+}
+
+.closeBtn:hover {
+  color: var(--card-bg-accent);
+}
+
+
 .closeBtn {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 20px;
+  top: 14px;
+  right: 14px;
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+@media screen and (min-width:768px) {
+
+  .modalContent {
+    width: 350px;
+
+
+  }
+
+  .submitBtn {
+    width: 302px;
+  }
 }

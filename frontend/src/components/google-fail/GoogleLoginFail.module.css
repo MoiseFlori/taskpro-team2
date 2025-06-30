@@ -1,0 +1,24 @@
+.wrapper {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 8px;
+  background-color: #fff3f3;
+  color: #a94442;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.backButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #d9534f;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #c9302c;
+}
