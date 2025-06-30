@@ -22,6 +22,7 @@ body {
   --text-color: #161616;
   --text-secondary: rgba(22, 22, 22, 0.7);
   --card-bg-accent: #BEDBB0;
+  --card-bg-accent-hover: #9DC888;
   --slider-color: #ccc;
   --logo-fill: #161616;
   --logo-bolt: #ffffff;
@@ -39,6 +40,7 @@ body {
   --easedTransition: 350ms ease-in-out;
   --add-column-main-background: #FFFFFF;
   --plus-icon-add-column-button: #161616;
+  --filter-icon: #161616CC;
 }
 
 [data-theme='dark'] {
@@ -52,6 +54,7 @@ body {
   --logo-bolt: #ffffff;
   --add-column-main-background: #121212;
   --plus-icon-add-column-button: #161616;
+  --card-bg-accent-hover: #9DC888;
 }
 
 [data-theme='violet'] {
@@ -61,6 +64,7 @@ body {
   --text-color: #161616;
   --text-secondary: #161616B2;
   --card-bg-accent: #5255BC;
+  --card-bg-accent-hover:#7B7EDE;
   --logo-fill: #5255BC;
   --logo-bolt: #fff;
   --add-column-main-background: #FFFFFF;

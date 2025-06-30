@@ -2,7 +2,7 @@
     font-weight: 500;
     font-size: 18px;
     line-height: 100%;
-    letter-spacing: -2%;
+    letter-spacing:-0.36px;
     color: var(--text-color);
     margin-bottom: 24px;
 }

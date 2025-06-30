@@ -9,9 +9,12 @@ const cardRoutes = require("./routes/api/cards");
 const boardRoutes = require("./routes/api/boards");
 const helpRoutes = require("./routes/api/help");
 const columnsRoutes = require("./routes/api/columns");
-
-const app = express();
+const googleAuthRoutes = require("./routes/api/googleAuth");
+const passport = require("passport");
 const connectDB = require("./db");
+
+require("./helpers/googleAuth");
+const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -27,6 +30,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"));
 
+app.use(passport.initialize());
+app.use(googleAuthRoutes);
 app.use("/users", userRouter);
 app.use("/api/cards", cardRoutes);
 app.use("/api/boards", boardRoutes);

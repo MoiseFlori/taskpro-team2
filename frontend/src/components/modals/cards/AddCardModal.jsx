@@ -60,7 +60,6 @@ const AddCardModal = ({ open, onClose, columnId }) => {
         priority: values.priority,
         deadline: values.deadline.toISOString(),
         column: columnId,
-        // status: "todo",
       };
 
       console.log("cardData sent: ", cardData);
@@ -78,39 +77,11 @@ const AddCardModal = ({ open, onClose, columnId }) => {
         await dispatch(createCard(cardData)).unwrap(); // unwrap - catches errors directly from thunk
         formik.resetForm();
         onClose();
-        toast.success("✅ Card added successfully!");
+        toast.success(" Card added successfully!");
       } catch (err) {
         console.error("Error at adding:", err);
-        toast.error("❌ Card adding failed. Check the token or the fields.");
+        toast.error(" Card adding failed. Check the token or the fields.");
       }
-
-      // try {
-      //   await dispatch(createCard(cardData)).unwrap(); // unwrap - catches errors directly from thunk
-      //   formik.resetForm();
-      //   onClose();
-      // } catch (err) {
-      //   console.error("Crearea cardului a eșuat:", err);
-      //   alert("Nu am putut salva cardul. Verifică datele sau autentificarea.");
-      // }
-
-      // try {
-      //   const token = localStorage.getItem("token");
-      //   const response = await fetch("/api/cards", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //     body: JSON.stringify(cardData),
-      //   });
-
-      // if (response.ok) {
-      //   formik.resetForm(); // after submit
-      //   onClose();
-      // }
-      // } catch (err) {
-      //   console.error("Error sending the card: ", err);
-      // }
     },
   });
 

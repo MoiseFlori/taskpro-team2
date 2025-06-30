@@ -12,9 +12,12 @@ import { registerThunk, loginThunk } from "../../redux/auth/authThunk";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 const LoginRegisterForm = () => {
   const { id } = useParams();
   const isLogin = id === "login";
+  const [isCapsLockOn, setIsCapsLockOn] = useState(false);
+
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
 
@@ -36,7 +39,7 @@ const LoginRegisterForm = () => {
         const formData = isLogin
           ? { email: values.email, password: values.password }
           : values;
-    
+
         if (isLogin) {
           await dispatch(loginThunk(formData)).unwrap();
           resetForm();
@@ -48,7 +51,7 @@ const LoginRegisterForm = () => {
             style: {
               background: "#151515",
               color: "#BEDBB0",
-              fontSize: "16px",
+              fontSize: "14px",
             },
           });
           navigate("/auth/login");
@@ -69,7 +72,7 @@ const LoginRegisterForm = () => {
               style: {
                 background: "#151515",
                 color: "#E74C3C",
-                fontSize: "16px",
+                fontSize: "14px",
               },
             });
           } else {
@@ -77,7 +80,7 @@ const LoginRegisterForm = () => {
               style: {
                 background: "#151515",
                 color: "#E74C3C",
-                fontSize: "16px",
+                fontSize: "14px",
               },
             });
           }
@@ -86,13 +89,13 @@ const LoginRegisterForm = () => {
             style: {
               background: "#151515",
               color: "#E74C3C",
-              fontSize: "16px",
+              fontSize: "14px",
             },
           });
         }
       }
     },
-  });    
+  });
 
   return (
     <div className={styles.background}>
@@ -159,8 +162,13 @@ const LoginRegisterForm = () => {
               className={styles.input}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              onKeyUp={(e) => setIsCapsLockOn(e.getModifierState("CapsLock"))}
               value={formik.values.password}
             />
+            {isCapsLockOn && (
+              <p className={styles.capsWarning}>Caps Lock is ON!</p>
+            )}
+
             <button
               type="button"
               onClick={() => setVisible((prev) => !prev)}
@@ -178,6 +186,12 @@ const LoginRegisterForm = () => {
             {isLogin ? "Log In Now" : "Register Now"}
           </button>
         </form>
+        <a href="http://localhost:3000/auth/google?prompt=select_account" className={styles.linkGoogle}>
+          <button type="button" className={styles.googleBtn}>
+            <Icon name="icon-google" className={styles.icon}/> Continue with
+            Google
+          </button>
+        </a>
       </div>
     </div>
   );

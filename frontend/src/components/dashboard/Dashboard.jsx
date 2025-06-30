@@ -9,6 +9,7 @@ import {
 } from "../../redux/columns/columnsSlice";
 import CardDashboard from "./cards/CardDashboard";
 import ColumnModal from "./columns/ColumnModal";
+import FilterModal from "../modals/filter/FilterModal";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const Dashboard = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editColumnData, setEditColumnData] = useState(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedPriority, setSelectedPriority] = useState("");
 
   useEffect(() => {
     if (selectedBoard?._id) {
@@ -39,24 +42,50 @@ const Dashboard = () => {
     dispatch(deleteColumnThunk(id));
   };
 
+  const toggleFilterModal = () => {
+    setIsFilterOpen((prev) => !prev);
+  };
+
+  const handlePriorityChange = (value) => {
+    setSelectedPriority(value);
+  };
+
+  const handleShowAll = () => {
+    setSelectedPriority("");
+  };
+
   return (
     <div className={styles.mainContainer}>
       {selectedBoard ? (
         <>
-          <h2 className={styles.dashboardTitle}>
-            {selectedBoard.title}
-            {columns.length > 0 && (
-              <Icon
-                name="plus"
-                width={28}
-                height={28}
-                className={styles.plusIcon}
-                onClick={openAddModal}
-                role="button"
-                aria-label="Add column"
-              />
-            )}
-          </h2>
+          <div className={styles.dashboardHeader}>
+            <h2 className={styles.dashboardTitle}>
+              {selectedBoard.title}
+              {columns.length > 0 && (
+                <Icon
+                  name="plus"
+                  width={28}
+                  height={28}
+                  className={styles.plusIcon}
+                  onClick={openAddModal}
+                  role="button"
+                  aria-label="Add column"
+                />
+              )}
+            </h2>
+
+            <div
+              className={styles.filterWrapper}
+              onClick={toggleFilterModal}
+              role="button"
+              tabIndex={0}
+              aria-label="Open filter modal"
+              onKeyDown={(e) => e.key === "Enter" && toggleFilterModal()}
+            >
+              <Icon name="icon-filter" className={styles.filterIcon} />
+              <span className={styles.filterText}>Filters</span>
+            </div>
+          </div>
 
           {columns.length === 0 && (
             <button className={styles.addColumnButton} onClick={openAddModal}>
@@ -95,7 +124,10 @@ const Dashboard = () => {
                       </button>
                     </div>
                   </div>
-                  <CardDashboard columnId={column._id} />
+                  <CardDashboard
+                    columnId={column._id}
+                    selectedPriority={selectedPriority}
+                  />
                 </div>
               ))}
             </div>
@@ -109,12 +141,22 @@ const Dashboard = () => {
               boardId={selectedBoard._id}
             />
           )}
+
+          {isFilterOpen && (
+            <FilterModal
+              open={isFilterOpen}
+              onClose={toggleFilterModal}
+              selectedPriority={selectedPriority}
+              onChangePriority={handlePriorityChange}
+              onShowAll={handleShowAll}
+            />
+          )}
         </>
       ) : (
         <div className={styles.textContainer}>
           <p className={styles.introText}>
-            Before starting your project, it is essential to{" "}
-            <span className={styles.highlight}>create a board</span> to
+            Before starting your project, it is essential{" "}
+            <span className={styles.highlight}> to create a board</span> to
             visualize and track all the necessary tasks and milestones. This
             board serves as a powerful tool to organize the workflow and ensure
             effective collaboration among team members.
