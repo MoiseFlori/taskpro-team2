@@ -11,6 +11,13 @@ const userSchema = new Schema(
         validator: (v) => !/\s/.test(v),
         message: "Password cannot contain spaces",
       },
+      required: function () {
+        return !this.googleId;
+      },
+    },
+    googleId: {
+      type: String,
+      default: null,
     },
     email: {
       type: String,

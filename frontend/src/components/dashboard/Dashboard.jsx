@@ -113,8 +113,8 @@ const Dashboard = () => {
       ) : (
         <div className={styles.textContainer}>
           <p className={styles.introText}>
-            Before starting your project, it is essential to{" "}
-            <span className={styles.highlight}>create a board</span> to
+            Before starting your project, it is essential{" "}
+            <span className={styles.highlight}> to create a board</span> to
             visualize and track all the necessary tasks and milestones. This
             board serves as a powerful tool to organize the workflow and ensure
             effective collaboration among team members.

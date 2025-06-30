@@ -14,7 +14,10 @@ const signup = async (req, res) => {
 
   const userExist = await User.findOne({ email });
   if (userExist) {
-    return res.status(409).json({ message: "Email in use" });
+    return res.status(409).json({
+      message:
+        "An account with this email already exists. Please log in or use a different email address.",
+    });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -62,7 +65,19 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
-  if (!user || !(await bcrypt.compare(password, user.password))) {
+  if (!user) {
+    return res.status(401).json({ message: "Email or password is wrong" });
+  }
+
+  if (!user.password) {
+    return res.status(400).json({
+      message:
+        "This account was created via Google. Please sign in with Google.",
+    });
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  if (!isPasswordCorrect) {
     return res.status(401).json({ message: "Email or password is wrong" });
   }
 
@@ -100,7 +115,6 @@ const getCurrentUser = async (req, res) => {
     },
   });
 };
-
 
 const logout = async (req, res) => {
   const { refreshToken } = req.cookies;
