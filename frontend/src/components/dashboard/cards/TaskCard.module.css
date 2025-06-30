@@ -11,6 +11,16 @@
 
 }
 
+@media (min-width: 375px) and (max-width: 767px) {
+  .taskCard{
+    width: 77vw;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  
+}
+
 .priorityStripe {
   width: 4px;
   border-top-left-radius: 8px;

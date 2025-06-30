@@ -116,7 +116,7 @@
 
 .columnsContainer {
   display: flex;
-  gap: 34px;
+  gap: 18px;
   margin-top: 24px;
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -150,6 +150,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+  .columnHeader {
+    width: 80vw;
+  }
 }
 
 .columnTitle {
