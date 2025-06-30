@@ -119,7 +119,12 @@ const TaskCard = ({
             </button>
             <button onClick={handleRedirect}>
               <Box sx={{ alignSelf: "flex-end", cursor: "pointer" }}>
-                <Icon name="icon-redirect" width={16} height={16} />
+                <Icon
+                  name="icon-redirect"
+                  width={16}
+                  height={16}
+                  className={styles.iconCards}
+                />
               </Box>
             </button>
             <RedirectCardModal
@@ -130,12 +135,22 @@ const TaskCard = ({
             />
             <button onClick={handleEdit}>
               <Box sx={{ alignSelf: "flex-end", cursor: "pointer" }}>
-                <Icon name="edit" width={16} height={16} />
+                <Icon
+                  name="edit"
+                  width={16}
+                  height={16}
+                  className={styles.iconCards}
+                />
               </Box>
             </button>
             <button onClick={handleDelete}>
               <Box sx={{ alignSelf: "flex-end", cursor: "pointer" }}>
-                <Icon name="delete" width={16} height={16} />
+                <Icon
+                  name="delete"
+                  width={16}
+                  height={16}
+                  className={styles.iconCards}
+                />
               </Box>
             </button>
             {isEditModalOpen && (

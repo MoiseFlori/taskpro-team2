@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { handlePending, handleRejected } from '../helpers';
-import { getTheme, updateTheme } from './themeOperation';
+import { createSlice } from "@reduxjs/toolkit";
+import { handlePending, handleRejected } from "../helpers";
+import { getTheme, updateTheme } from "./themeOperation";
 
 const themeSlice = createSlice({
-  name: 'theme',
+  name: "theme",
   initialState: {
-    theme: 'light',
+    theme: "light",
     isLoading: false,
     error: null,
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(getTheme.pending, handlePending)
       .addCase(updateTheme.pending, handlePending)
@@ -19,6 +19,7 @@ const themeSlice = createSlice({
         state.error = null;
       })
       .addCase(updateTheme.fulfilled, (state, { payload }) => {
+        console.log("🎯 Payload din updateTheme:", payload);
         state.isLoading = false;
         state.error = null;
         state.theme = payload.theme;

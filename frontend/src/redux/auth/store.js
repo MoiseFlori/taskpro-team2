@@ -17,7 +17,7 @@ import { setStore } from "../../utils/storeRef";
 import selectedBoardReducer from "../boards/selectedBoardSlice";
 import boardsReducer from "../boards/boardsSlice";
 import columnsReducer from "../columns/columnsSlice";
-import cardsReducer from "../cards/cardsSlice"; 
+import cardsReducer from "../cards/cardsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -25,13 +25,12 @@ const rootReducer = combineReducers({
   selectedBoard: selectedBoardReducer,
   columns: columnsReducer,
   cards: cardsReducer,
-
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "boards", "cards"],
+  whitelist: ["auth", "boards", "cards", "theme"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

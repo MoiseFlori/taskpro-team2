@@ -6,12 +6,11 @@
   width: 100vw;
   padding: 12px;
   overflow-y: auto;
-
   /* --- Mobile (hidden by default) --- */
   position: fixed;
   left: 0;
   top: 0;
-  background: #fff;
+  background: var(--bg-sidebar);
   z-index: 1000;
   transform: translateX(-100%);
   transition: transform 0.3s;
@@ -30,7 +29,9 @@
   display: block;
   padding: 6px;
   z-index: 1100;
+  color: var(--text-color)
 }
+
 .sidebarContent {
   display: flex;
   flex-direction: column;
@@ -61,21 +62,24 @@
   font-size: 14px;
   color: var(--text-secondary);
   margin: 8px 0 8px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-color, #ECECEC);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .createBoardWrapper {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0 8px 0;
+  padding: 14px;
 }
 
 .createBoardText {
+  position: relative;
   font-size: 14px;
   color: var(--text-color);
   font-weight: 500;
+
 }
 
 .plusButton {
@@ -100,28 +104,38 @@
   min-height: 80px;
   overflow-y: auto;
   margin: 12px 0 12px 0;
-  background: var(--board-list-bg, #fff);
+  background: var(--sidebar-bg);
+  color: var(--text-color);
   border-radius: 12px;
-  box-shadow: var(--elevation-low, 0 2px 8px 0 rgba(0,0,0,0.03));
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.03);
   padding: 4px 0;
 }
 
 .boardList {
   list-style: none;
   padding: 0;
-  margin: 8px 0 0 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border-top: 1px solid var(--border-color, #ECECEC);
+
+}
+
+.createBoardWrapper::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--border-color);
 }
 
 .boardItem {
   display: flex;
   align-items: center;
-  gap: 8px; /* controls space between icon, text, actions */
+  gap: 8px;
   padding: 12px 18px;
-  background: var(--board-bg, #f8f8f8);
+  background: var(--bg-color);
   border-radius: 10px;
   font-size: 15px;
   font-weight: 500;
@@ -143,24 +157,24 @@
 }
 
 .boardItem .iconWrap {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    margin-right: 4px;
-  }
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-right: 4px;
+}
 
-  .boardTitle {
-    flex: 1 1 auto;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left;
-    margin-right: 0;
-    margin-left: 0;
-    display: block;
-  }
+.boardTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  margin-right: 0;
+  margin-left: 0;
+  display: block;
+}
 
 .boardItem .editBtn,
 .boardItem .deleteBtn {
@@ -174,6 +188,7 @@
   border-radius: 4px;
   transition: background 0.2s, opacity 0.2s;
 }
+
 .boardItem .editBtn:hover,
 .boardItem .deleteBtn:hover {
   background: rgba(96, 153, 102, 0.13);
@@ -187,8 +202,9 @@
   text-overflow: ellipsis;
   display: block;
   text-align: left;
-  margin-left: 0;     /* Important: no margin-left */
-  margin-right: 0;    /* Or small value for gap before actions */
+  margin-left: 0;
+  margin-right: 0;
+
 }
 
 
@@ -202,13 +218,14 @@
 .helpCard {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;   
-  background: rgba(0, 0, 0, 0.03);
+  align-items: flex-start;
+  background: var(--bg-color);
   border-radius: 8px;
   padding: 16px;
   margin: 20px 0 24px 0;
   text-align: left;
-  box-shadow: var(--elevation-low, 0 2px 8px 0 rgba(0,0,0,0.03));
+  box-shadow: var(--elevation-low, 0 2px 8px 0 rgba(0, 0, 0, 0.03));
+  color: var(--text-color);
 }
 
 .helpCard img {
@@ -233,6 +250,7 @@
   cursor: pointer;
   padding: 0;
 }
+
 .helpBtn:active,
 .helpBtn:focus {
   outline: none;
@@ -264,20 +282,22 @@
 /* === Tablet === */
 @media (min-width: 768px) {
   .sidebar {
-    width: 260px;     /* Drawer width on tablet */
-    max-width: 90vw;  /* Fallback if viewport smaller than sidebar */
+    width: 260px;
+    /* Drawer width on tablet */
+    max-width: 90vw;
+    /* Fallback if viewport smaller than sidebar */
     padding: 24px;
   }
 }
 
 /* === Desktop === */
-@media (min-width: 1024px) {
+@media (min-width: 1440px) {
   .sidebar {
     position: static;
     width: 260px;
     padding: 24px;
     transform: none;
-    background: var(--sidebar-bg, #fff);
+    background: var(--bg-sidebar);
     z-index: 1;
   }
 
@@ -285,14 +305,13 @@
     display: none;
   }
 
-  .boardListWrapper {
-    margin-top: 16px;
-  }
-  .boardItem {
-    padding: 10px 12px 10px 16px; /* Less right padding, good left space */
-    font-size: 15px;
-    gap: 8px; /* icon/text/button gap */
-  }
-  
-}
 
+  .boardItem {
+    padding: 10px 12px 10px 16px;
+    /* Less right padding, good left space */
+    font-size: 15px;
+    gap: 8px;
+    /* icon/text/button gap */
+  }
+
+}

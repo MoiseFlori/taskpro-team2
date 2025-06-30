@@ -107,11 +107,13 @@ const login = async (req, res) => {
 };
 
 const getCurrentUser = async (req, res) => {
-  const { name, email } = req.user;
+  const { name, email, theme } = req.user;
+
   res.status(200).json({
     user: {
       name,
       email,
+      theme, 
     },
   });
 };
@@ -215,6 +217,23 @@ const refreshToken = async (req, res) => {
     res.status(403).json({ message: "Invalid or expired refresh token" });
   }
 };
+const updateUserTheme = async (req, res) => {
+  const { _id } = req.user;
+  const { theme } = req.body;
+
+  if (!["light", "dark", "violet"].includes(theme)) {
+    return res.status(400).json({ message: "Invalid theme" });
+  }
+
+  const user = await User.findByIdAndUpdate(
+    _id,
+    { theme },
+    { new: true, select: "theme" }
+  );
+
+  res.json({ theme: user.theme });
+};
+
 
 module.exports = {
   signup,
@@ -224,4 +243,5 @@ module.exports = {
   resendVerificationEmail,
   refreshToken,
   getCurrentUser,
+  updateUserTheme,
 };

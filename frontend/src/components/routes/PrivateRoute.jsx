@@ -13,10 +13,8 @@ const PrivateRoute = ({ children }) => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
-    console.log("Token din URL:", token);
 
     if (token) {
- 
       setAuthToken(token);
 
       dispatch(setToken(token));
@@ -34,7 +32,6 @@ const PrivateRoute = ({ children }) => {
       navigate(location.pathname, { replace: true });
     }
   }, [location.search, dispatch, navigate, location.pathname]);
-
 
   return isLoggedIn ? children : <Navigate to="/auth/login" />;
 };
