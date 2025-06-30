@@ -15,5 +15,6 @@ router.get("/verify/:verificationToken", ctrl.verifyEmail);
 router.post("/verify", ctrl.resendVerificationEmail);
 router.post("/refresh", ctrl.refreshToken);
 router.get("/current", auth, ctrl.getCurrentUser);
+router.patch("/current/theme", auth, ctrl.updateUserTheme);
 
 module.exports = router;

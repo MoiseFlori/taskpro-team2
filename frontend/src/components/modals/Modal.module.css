@@ -1,5 +1,5 @@
 .modal {
-  background-color: var(--bg-sidebar);
+  background-color: var(--modal-bg);
   border-radius: 8px;
   padding: 24px;
   width: 335px;
@@ -27,6 +27,7 @@
 .modalTitle {
   font-size: 18px;
   margin-bottom: 16px;
+  color: var(--text-color);
 }
 
 .input {
@@ -41,7 +42,7 @@
 .sectionLabel {
   font-size: 14px;
   margin: 16px 0 8px;
-  color: var(--text-secondary);
+  color: var(--text-color);
 }
 
 .iconList {
@@ -62,12 +63,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .iconOption svg {
   width: 20px;
   height: 20px;
-  stroke: var(--text-color);
+  color: var(--text-color);
 }
 
 .iconOption.selected {
@@ -111,7 +113,7 @@
   padding: 12px 16px;
   font-weight: 500;
   font-size: 14px;
-  color: var(--text-color);
+  color: var(--text-button);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,9 +121,13 @@
   cursor: pointer;
 }
 
+.submitBtn:hover {
+  background-color: var(--card-bg-accent-hover);
+}
+
 .plusBtn {
-  background: #000;
-  color: #fff;
+  background: var(--plus-btn);
+  color: var(--plus-icon);
   border-radius: 4px;
   padding: 0 6px;
 }
@@ -135,6 +141,7 @@
   cursor: pointer;
   padding: 4px;
   line-height: 0;
+  color: var(--text-color);
 }
 
 .closeBtn svg {

@@ -4,6 +4,7 @@
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  background-color: var(--dashboard-bg);
 }
 
 .highlight {
@@ -123,13 +124,12 @@
   margin-bottom: 0;
   height: calc(100vh - 50px);
   scrollbar-gutter: stable both-edges;
-  /* it keeps the space for scrollbar */
-  /* border: 2px dashed red; */
+
 }
 
 .columnsContainer::-webkit-scrollbar {
   height: 8px;
-  /* scrollbar's height */
+
 }
 
 .columnsContainer::-webkit-scrollbar-thumb {
@@ -145,7 +145,7 @@
   width: 335px;
   height: 56px;
   border-radius: 8px;
-  background-color: var(--white-color);
+  background-color: var(--bg-column-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -157,6 +157,7 @@
   font-size: 14px;
   line-height: 100%;
   letter-spacing: -0.28px;
+  color: var(--text-color);
 }
 
 .iconBtn {
@@ -164,12 +165,12 @@
   border: none;
   cursor: pointer;
   padding: 4px;
-  color: #16161680;
+  color: var(--columns-icon);
   transition: color 0.2s ease;
 }
 
 .iconBtn:hover {
-  color: var(--card-bg-accent);
+  color: var(--card-bg-accent-hover);
 
 
 }
