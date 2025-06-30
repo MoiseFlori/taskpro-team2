@@ -157,6 +157,7 @@
   .columnHeader {
     width: 80vw;
   }
+
 }
 
 .columnTitle {
@@ -187,6 +188,7 @@
     padding: 26px 32px;
   }
 
+
   .introText {
     font-size: 14px;
     line-height: 18px;
@@ -204,6 +206,10 @@
     font-size: 14px;
     line-height: 18px;
 
+  }
+
+  .columnsContainer {
+    overflow: hidden;
   }
 
 }

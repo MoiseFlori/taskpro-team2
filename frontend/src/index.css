@@ -78,6 +78,7 @@ body {
   --gray-secondary: #161616B2;
   --sidebar-plus-icon-bg: #BEDBB0;
   --slider-color: #121212;
+  --filter-icon: #ffffff;
 }
 
 [data-theme='violet'] {
@@ -102,6 +103,7 @@ body {
   --bg-column-color: #FFFFFF;
   --columns-icon: #16161680;
   --sidebar-plus-icon-bg: #B8BCFD;
+  --filter-icon: #161616CC;
 
 
 }
