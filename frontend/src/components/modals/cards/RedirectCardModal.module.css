@@ -10,9 +10,9 @@
   align-items: center;
   z-index: 1000;
 }
-  
+
 .modalPopUp {
-  background: white;
+  background: var(--bg-column-color);
   padding: 18px;
   border-radius: 8px;
   min-width: 120px;
@@ -20,14 +20,16 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  
 }
 
 .columnsList {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
   
+}
+
 .redirectButton {
   display: flex;
   justify-content: space-between;
@@ -41,16 +43,18 @@
   font-size: 14px;
   line-height: 100%;
   letter-spacing: -2%;
+  color: var(--text-color);
+  
 }
 
 .redirectButton:hover {
-  color: var(--priority-green);
+  color: var(--card-bg-accent-hover);
 }
 
 .active {
-  color: var(--priority-green);
+  color: var(--card-bg-accent-hover);
 }
 
 .near {
-    color: var(--priority-value);
+  color: var(--priority-value);
 }

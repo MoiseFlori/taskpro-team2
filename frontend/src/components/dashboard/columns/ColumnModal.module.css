@@ -12,7 +12,7 @@
 }
 
 .modalContent {
-  background-color: var(--bg-modal-color);
+  background-color: var(--add-column-main-background);
   padding: 24px;
   border-radius: 12px;
   width: 335px;
@@ -30,6 +30,7 @@
   font-size: 18px;
   line-height: 100%;
   letter-spacing: -0.36px;
+  color: var(--text-color);
 }
 
 .input {
@@ -39,8 +40,18 @@
   border: 1px solid var(--card-bg-accent);
   margin-bottom: 24px;
   outline: none;
+  background: transparent;
+  color: var(--text-color);
+}
 
-
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  background-color: transparent !important;
+  -webkit-text-fill-color: var(--white-color) !important;
+  transition: background-color 9999s ease-in-out 0s !important;
 }
 
 .input:focus {
@@ -95,6 +106,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
+  color: var(--text-color);
 }
 
 @media screen and (min-width:768px) {

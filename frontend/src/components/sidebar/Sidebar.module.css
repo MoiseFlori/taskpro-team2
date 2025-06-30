@@ -29,7 +29,7 @@
   display: block;
   padding: 6px;
   z-index: 1100;
-  color: var(--text-color)
+  color: var(--text-sidebar)
 }
 
 .sidebarContent {
@@ -77,13 +77,13 @@
 .createBoardText {
   position: relative;
   font-size: 14px;
-  color: var(--text-color);
+  color: var(--text-sidebar);
   font-weight: 500;
 
 }
 
 .plusButton {
-  background-color: var(--card-bg-accent);
+  background-color: var(--sidebar-plus-icon-bg);
   border: none;
   border-radius: 8px;
   padding: 8px;
@@ -96,7 +96,7 @@
 .plusIcon {
   width: 20px;
   height: 20px;
-  color: var(--text-color);
+  color: var(--text-sidebar);
 }
 
 .boardListWrapper {
@@ -105,7 +105,7 @@
   overflow-y: auto;
   margin: 12px 0 12px 0;
   background: var(--sidebar-bg);
-  color: var(--text-color);
+  color: var(--text-sidebar);
   border-radius: 12px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.03);
   padding: 4px 0;
@@ -139,7 +139,7 @@
   border-radius: 10px;
   font-size: 15px;
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--text-sidebar);
   cursor: pointer;
   border: 2px solid transparent;
   position: relative;
@@ -187,6 +187,7 @@
   align-items: center;
   border-radius: 4px;
   transition: background 0.2s, opacity 0.2s;
+  color: var(--text-secondary);
 }
 
 .boardItem .editBtn:hover,
@@ -225,7 +226,7 @@
   margin: 20px 0 24px 0;
   text-align: left;
   box-shadow: var(--elevation-low, 0 2px 8px 0 rgba(0, 0, 0, 0.03));
-  color: var(--text-color);
+  color: var(--text-sidebar);
 }
 
 .helpCard img {
@@ -245,7 +246,7 @@
   gap: 6px;
   background: none;
   border: none;
-  color: var(--text-color);
+  color: var(--text-sidebar);
   font-size: 15px;
   cursor: pointer;
   padding: 0;
@@ -266,7 +267,7 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: var(--text-color);
+  color: var(--text-sidebar);
   background: none;
   border: none;
   cursor: pointer;

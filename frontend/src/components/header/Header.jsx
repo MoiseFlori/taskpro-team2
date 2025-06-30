@@ -1,8 +1,6 @@
 import styles from "./Header.module.css";
 import ThemeSelect from "../themes/ThemeSelect";
 import Icon from "../Icon";
-// import Profile from 'components/Profile/Profile';
-// import { TempForLanguages } from 'components/TempForLanguages/TempForLanguages';
 
 const Header = ({ onBurgerClick }) => {
   return (
@@ -15,9 +13,7 @@ const Header = ({ onBurgerClick }) => {
         <Icon name="icon-menu" className={styles.iconBurger} />
       </button>
       <div className={styles.headerUserWrap}>
-        {/* <TempForLanguages /> */}
         <ThemeSelect />
-        {/* <Profile /> */}
       </div>
     </header>
   );

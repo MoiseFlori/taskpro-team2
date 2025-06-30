@@ -23,7 +23,7 @@ body {
   --text-secondary: rgba(22, 22, 22, 0.7);
   --card-bg-accent: #BEDBB0;
   --card-bg-accent-hover: #9DC888;
-  --slider-color: #ccc;
+  --slider-color: #1616161A;
   --logo-fill: #161616;
   --logo-bolt: #ffffff;
   --light-green-gradient: linear-gradient(180deg, #ffffff 25%, #bedbb0 92.19%);
@@ -51,6 +51,7 @@ body {
   --dashboard-bg: #F6F6F7;
   --bg-column-color: #FFFFFF;
   --columns-icon: #16161680;
+  --sidebar-plus-icon-bg: #BEDBB0;
 
 }
 
@@ -66,7 +67,7 @@ body {
   --add-column-main-background: #121212;
   --plus-icon-add-column-button: #161616;
   --card-bg-accent-hover: #9DC888;
-  --header-color: ##161616;
+  --header-color: #161616;
   --border-color: #FFFFFF1A;
   --help-bg: #1F1F1F;
   --text-button: #161616;
@@ -75,6 +76,8 @@ body {
   --bg-column-color: #121212;
   --columns-icon: #FFFFFF80;
   --gray-secondary: #161616B2;
+  --sidebar-plus-icon-bg: #BEDBB0;
+  --slider-color: #121212;
 }
 
 [data-theme='violet'] {
@@ -98,6 +101,7 @@ body {
   --dashboard-bg: #B8BCFD;
   --bg-column-color: #FFFFFF;
   --columns-icon: #16161680;
+  --sidebar-plus-icon-bg: #B8BCFD;
 
 
 }

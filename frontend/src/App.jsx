@@ -7,10 +7,20 @@ import AuthPage from "./pages/AuthPage";
 import VerifySuccess from "./pages/VerifySuccess";
 import VerifyFail from "./pages/VerifyFail";
 import GoogleLoginFail from "./components/google-fail/GoogleLoginFail";
+import { useSelector } from "react-redux";
+import { selectTheme } from "./redux/theme/themeSelector";
+import { useEffect } from "react";
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 function App() {
+  const theme = useSelector(selectTheme);
+
+  useEffect(() => {
+    if (theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+  }, [theme]);
   return (
     <GoogleOAuthProvider clientId={clientId}>
       <BrowserRouter>

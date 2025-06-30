@@ -56,7 +56,7 @@ function ThemeSelect() {
             fontWeight: 600,
             fontSize: "16px",
             letterSpacing: "-0.02em",
-            color: "var(--theme-color-text)",
+            color: "var(--text-color)",
             paddingRight: "8px",
           }),
           placeholder: (base) => ({
@@ -64,7 +64,7 @@ function ThemeSelect() {
             fontFamily: "Poppins, sans-serif",
             fontWeight: 500,
             fontSize: "14px",
-            color: "var(--theme-color-text)",
+            color: "var(--text-color)",
           }),
           indicatorsContainer: (base) => ({
             ...base,
@@ -74,7 +74,7 @@ function ThemeSelect() {
           dropdownIndicator: (base) => ({
             ...base,
             padding: 0,
-            color: "var(--theme-color-text)",
+            color: "var(--text-color)",
           }),
           indicatorSeparator: () => ({
             display: "none",
@@ -90,7 +90,7 @@ function ThemeSelect() {
           }),
           menu: (base) => ({
             ...base,
-            backgroundColor: "#fff",
+            backgroundColor: "var(--bg-modal-color)",
             color: "var(--text-color)",
             borderRadius: "16px",
             border: "2px solid var(--card-bg-accent)",

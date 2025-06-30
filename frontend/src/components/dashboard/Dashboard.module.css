@@ -27,6 +27,7 @@
   text-align: center;
   width: 335px;
   height: 80px;
+  color: var(--text-color);
 }
 
 .dashboardHeader {
