@@ -18,6 +18,7 @@ import selectedBoardReducer from "../boards/selectedBoardSlice";
 import boardsReducer from "../boards/boardsSlice";
 import columnsReducer from "../columns/columnsSlice";
 import cardsReducer from "../cards/cardsSlice";
+import {themeReducer} from "../theme/themeSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   selectedBoard: selectedBoardReducer,
   columns: columnsReducer,
   cards: cardsReducer,
+  theme: themeReducer,
 });
 
 const persistConfig = {

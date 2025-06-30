@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handlePending, handleRejected } from "../helpers";
+import { handlePending, handleRejected } from "./helpers";
 import { getTheme, updateTheme } from "./themeOperation";
 
 const themeSlice = createSlice({
